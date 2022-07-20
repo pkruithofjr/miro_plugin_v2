@@ -31,9 +31,12 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 function getStickies() {
-    return miro.board.widgets.get({
-        type: 'STICKER',
-    });
+    // return miro.board.widgets.get({
+    //     type: 'STICKER',
+    // });
+    const items = await miro.board.get({type:'sticky_note'});
+    debugger
+    return miro.board.get()
 }
 function getStickyById(widgets, id) {
     index = widgets.findIndex((widget) => widget.id == id);

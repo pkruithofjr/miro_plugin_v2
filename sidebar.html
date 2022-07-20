@@ -113,18 +113,24 @@
         <!-- <script src="src/cluster.js"></script> -->
         <script>
             debugger
-            miro.v1.onReady(async () => {
-                metaData = await miro.v1.board.metadata.get();
+            init()
+            async function init() {
+                await checkDataForFluidMemory()
+                loadTagSelectOptions()
+            }
+            
+            // miro.v1.onReady(async () => {
+            //     metaData = await miro.v1.board.metadata.get();
 
-                if (!metaData[appId]) {
-                    metaData[appId] = { appId };
-                    await miro.v1.board.metadata.update(metaData);
-                }
+            //     if (!metaData[appId]) {
+            //         metaData[appId] = { appId };
+            //         await miro.v1.board.metadata.update(metaData);
+            //     }
 
-                await checkDataForFluidMemory();
+            //     await checkDataForFluidMemory();
 
-                loadTagSelectOptions();
-            });
+            //     loadTagSelectOptions();
+            // });
 
             // var pastebtn = $("#paste_btn")
             // pastebtn.onclick(function() {
