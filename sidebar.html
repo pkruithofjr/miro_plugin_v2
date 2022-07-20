@@ -112,12 +112,13 @@
         <script src="src/search.js"></script>
         <!-- <script src="src/cluster.js"></script> -->
         <script>
-            miro.onReady(async () => {
-                metaData = await miro.board.metadata.get();
+            debugger
+            miro.v1.onReady(async () => {
+                metaData = await miro.v1.board.metadata.get();
 
                 if (!metaData[appId]) {
                     metaData[appId] = { appId };
-                    await miro.board.metadata.update(metaData);
+                    await miro.v1.board.metadata.update(metaData);
                 }
 
                 await checkDataForFluidMemory();
