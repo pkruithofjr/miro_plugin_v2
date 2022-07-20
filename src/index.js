@@ -2,8 +2,10 @@ const { board } = window.miro;
 
 async function init() {
     board.ui.on("icon:click", async () => {
-        let selectedItems = await board.getSelection();
 
+        await board.ui.openPanel({
+            url: "sidebar.html"
+        })
         // Filter sticky notes from selected items
         // let stickyNotes = selectedItems.filter((item) => item.type === "sticky_note");
 
