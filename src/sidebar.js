@@ -346,6 +346,7 @@ async function focusOnWidgets(widgets) {
 }
 
 async function checkDataForFluidMemory() {
+    console.log("checkDataForFluidMemory")
     toggleLoading(true);
     console.log("finish toggleloading")
     var widgets = await getStickies();

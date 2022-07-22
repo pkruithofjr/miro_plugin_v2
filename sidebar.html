@@ -112,8 +112,9 @@
         <script src="src/search.js"></script>
         <!-- <script src="src/cluster.js"></script> -->
         <script>
-            await init()
-            async function init() {
+            init()
+            function init() {
+                console.log("init")
                 await checkDataForFluidMemory()
                 loadTagSelectOptions()
             }
