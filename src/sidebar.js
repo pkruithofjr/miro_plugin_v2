@@ -30,7 +30,7 @@ function randomId() {
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
-function getStickies() {
+async function getStickies() {
     // return miro.board.widgets.get({
     //     type: 'STICKER',
     // });

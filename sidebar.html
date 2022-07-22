@@ -112,12 +112,13 @@
         <script src="src/search.js"></script>
         <!-- <script src="src/cluster.js"></script> -->
         <script>
-            init()
-            function init() {
+            debugger
+            async function init() {
                 console.log("init")
                 await checkDataForFluidMemory()
                 loadTagSelectOptions()
             }
+            init()
             // miro.v1.onReady(async () => {
             //     metaData = await miro.v1.board.metadata.get();
 
