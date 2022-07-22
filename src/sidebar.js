@@ -34,8 +34,18 @@ function getStickies() {
     // return miro.board.widgets.get({
     //     type: 'STICKER',
     // });
-    const items = await miro.board.get({type:'sticky_note'});
-    debugger
+    const items = await miro.board.get();
+    let cards = 0;
+    let shapes = 0;
+
+    items.forEach((items) => {
+    switch (items.type) {
+        case 'card':
+            sticky_note++;
+        case 'shape':
+            shapes++;
+    }
+    });
     return miro.board.get()
 }
 function getStickyById(widgets, id) {
