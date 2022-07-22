@@ -31,26 +31,7 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 async function getStickies() {
-    // return miro.board.widgets.get({
-    //     type: 'STICKER',
-    // });
-    console.log("getstickies")
-    debugger
-    console.log(miro)
-    const items = await miro.board.get();
-    let cards = 0;
-    let shapes = 0;
-
-    items.forEach((items) => {
-    switch (items.type) {
-        case 'card':
-            cards++;
-        case 'shape':
-            shapes++;
-    }
-    });
-    console.log(`${cards}, ${shapes}`)
-    return miro.board.get()
+    return await miro.board.get({type:['sticky_note']})
 }
 function getStickyById(widgets, id) {
     index = widgets.findIndex((widget) => widget.id == id);
@@ -60,8 +41,8 @@ function getStickyById(widgets, id) {
 function getStickyById(stickies, id) {
     return stickies[stickies.findIndex((widget) => (widget.id = id))];
 }
-function getTags() {
-    return miro.board.tags.get();
+async function getTags() {
+    return await miro.board.get({type: "tag"})
 }
 
 function filterCopies(widgets) {
@@ -350,6 +331,7 @@ async function checkDataForFluidMemory() {
     toggleLoading(true);
     console.log("finish toggleloading")
     var widgets = await getStickies();
+    console.log(widgets)
     var registeredTags = await getTags(); // get existed tags in board
 
     for (widgetIndex in widgets) {
