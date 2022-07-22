@@ -34,6 +34,9 @@ function getStickies() {
     // return miro.board.widgets.get({
     //     type: 'STICKER',
     // });
+    console.log("getstickies")
+    debugger
+    console.log(miro)
     const items = await miro.board.get();
     let cards = 0;
     let shapes = 0;
@@ -41,11 +44,12 @@ function getStickies() {
     items.forEach((items) => {
     switch (items.type) {
         case 'card':
-            sticky_note++;
+            cards++;
         case 'shape':
             shapes++;
     }
     });
+    console.log(`${cards}, ${shapes}`)
     return miro.board.get()
 }
 function getStickyById(widgets, id) {
@@ -343,6 +347,7 @@ async function focusOnWidgets(widgets) {
 
 async function checkDataForFluidMemory() {
     toggleLoading(true);
+    console.log("finish toggleloading")
     var widgets = await getStickies();
     var registeredTags = await getTags(); // get existed tags in board
 
