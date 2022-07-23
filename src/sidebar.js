@@ -1,4 +1,4 @@
-var appId = '3074457365447061755';
+var appId = '3458764529472261466';
 var addOnAppId = '3074457360238945885';
 var defaultWidgetWidth = 199,
     defaultWidgetHeight = 228,

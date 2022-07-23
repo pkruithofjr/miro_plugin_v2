@@ -113,8 +113,15 @@
         <!-- <script src="src/cluster.js"></script> -->
         <script>
             debugger
+            var appId = "3458764529472261466"
             async function init() {
                 console.log("init")
+                metaData = await miro.board.getAppData(appId)
+                console.log(metaData)
+                if (!metaData[appId]) {
+                    metaData[appId] = { appId };
+                    await miro.board.setAppData(appId, metaData);
+                }
                 await checkDataForFluidMemory()
                 loadTagSelectOptions()
             }
