@@ -47,15 +47,18 @@ async function getTags() {
 
 function filterCopies(widgets) {
     var repeated = [];
-    getTags().then((tags) => {
-        tags.forEach((tag) => {
-            console.log(tag)
-        })
-    })
+    var registeredTags = await getTags(); // get existed tags in board
+    var copyTagId
+    for(tags in registeredTags) {
+        if(tags.title.toLowerCase() == 'copy') {
+            copyTagId = tags.id
+            break
+        }
+    }
     return widgets.filter(widget => {
         console.log(widget)
         debugger
-        var hasCopyTag = widget.tags.some(tag => tag.title.toLowerCase() == 'copy');
+        var hasCopyTag = widget.tags.some(copyTagId);
         var hasSameSecretId = false;
         if (hasCopyTag) {
             return false;
@@ -334,7 +337,6 @@ async function focusOnWidgets(widgets) {
 }
 
 async function checkDataForFluidMemory() {
-    console.log("checkDataForFluidMemory")
     toggleLoading(true);
     console.log("finish toggleloading")
     var widgets = await getStickies();
