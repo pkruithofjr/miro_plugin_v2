@@ -48,6 +48,8 @@ async function getTags() {
 function filterCopies(widgets) {
     var repeated = [];
     return widgets.filter(widget => {
+        console.log(widget)
+        debugger
         var hasCopyTag = widget.tags.some(tag => tag.title.toLowerCase() == 'copy');
         var hasSameSecretId = false;
         if (hasCopyTag) {
