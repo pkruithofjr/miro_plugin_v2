@@ -22,6 +22,7 @@ function getSelectedTag() {
 }
 
 function loadTagSelectOptions() {
+    debugger
     toggleLoading();
     getTags().then((tags) => {
         $('#tag-select').html('<option value="all"> All </option>');

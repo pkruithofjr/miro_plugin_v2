@@ -114,15 +114,16 @@
         <script>
             var appId = '3458764529472261466'
             async function init() {
-                console.log("init")
-                metaData = await miro.board.getAppData(appId)
-                console.log(metaData)
-                debugger
-                if (!metaData) {
-                    metaData[appId] = { appId };
-                    await miro.board.setAppData(appId, metaData);
-                }
-                await checkDataForFluidMemory()
+                // console.log("init")
+                // metaData = await miro.board.getAppData(appId)
+                // console.log(metaData)
+                // debugger
+                // if (!metaData) {
+                //     metaData[appId] = { appId };
+                //     await miro.board.setAppData(appId, metaData);
+                // }
+
+                // await checkDataForFluidMemory()
                 loadTagSelectOptions()
             }
             init()
