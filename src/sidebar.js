@@ -47,6 +47,11 @@ async function getTags() {
 
 function filterCopies(widgets) {
     var repeated = [];
+    getTags().then((tags) => {
+        tags.forEach((tag) => {
+            console.log(tag)
+        })
+    })
     return widgets.filter(widget => {
         console.log(widget)
         debugger
@@ -55,11 +60,11 @@ function filterCopies(widgets) {
         if (hasCopyTag) {
             return false;
         }
-        if (widget.metadata[appId] && widget.metadata[appId].secretId) {
-            if (repeated[widget.metadata[appId].secretId]) {
+        if (widget.id) {
+            if (repeated[widget.id]) {
                 hasSameSecretId = true;
             } else {
-                repeated[widget.metadata[appId].secretId] = true;
+                repeated[widget.id] = true;
                 hasSameSecretId = false;
             }
         }
