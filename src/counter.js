@@ -160,7 +160,8 @@ async function listWords() {
         var text = widget.content
             .replace(/[^A-Za-z0-9]/g, ' ')
             .toLowerCase()
-            .replace(/\s\s+/g, ' '); // Replace special characters into space and replace multiple spaces into single space
+            .replace(/\s\s+/g, ' ')
+            .replace(/<[^>]+>/g, '');; // Replace special characters into space and replace multiple spaces into single space
         var words = text.split(' ');
         var registeredTags = await getTags();
         var tagNames = registeredTags.map((tag) => tag.title);
