@@ -157,12 +157,13 @@ async function listWords() {
     stickies = await filterCopies(stickies);
 
     for (widget of stickies) {
-        var text = widget.plainText
+        var text = widget.content
             .replace(/[^A-Za-z0-9]/g, ' ')
             .toLowerCase()
             .replace(/\s\s+/g, ' '); // Replace special characters into space and replace multiple spaces into single space
         var words = text.split(' ');
-        var tagNames = widget.tags.map((tag) => tag.title);
+        var registeredTags = await getTags();
+        var tagNames = registeredTags.map((tag) => tag.title);
 
         for (word of words) {
             // Get word count in this widget
