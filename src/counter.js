@@ -22,7 +22,6 @@ function getSelectedTag() {
 }
 
 function loadTagSelectOptions() {
-    debugger
     toggleLoading();
     getTags().then((tags) => {
         $('#tag-select').html('<option value="all"> All </option>');
@@ -265,6 +264,8 @@ async function listWords() {
 // Cluster in Count
 
 function getWidgetIdsFromData(data) {
+    console.log(data)
+    console.log(data.type)
     widgetIds = [];
 
     toggleLoading(true);

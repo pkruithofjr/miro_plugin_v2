@@ -345,7 +345,6 @@ async function checkDataForFluidMemory() {
     for (widgetIndex in widgets) {
         var widget = widgets[widgetIndex];
         var text = widget.text;
-        debugger
         if (widget.metadata[addOnAppId] && widget.metadata[addOnAppId].tag) {
 
             var tagName = widget.metadata[addOnAppId].tag.tagName;
