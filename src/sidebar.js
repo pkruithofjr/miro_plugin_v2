@@ -45,7 +45,7 @@ async function getTags() {
     return await miro.board.get({type: "tag"})
 }
 
-function filterCopies(widgets) {
+async function filterCopies(widgets) {
     var repeated = [];
     var registeredTags = await getTags(); // get existed tags in board
     var copyTagId
