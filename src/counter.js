@@ -34,6 +34,7 @@ function loadTagSelectOptions() {
 }
 
 function getWordTagTotalCount(words) {
+    console.log(words)
     var sum = 0;
 
     for (index in words) {
@@ -44,6 +45,7 @@ function getWordTagTotalCount(words) {
 }
 
 function getWordTotalCount(wordTags) {
+    console.log(wordTags)
     var sum = 0;
     var duplicated = [];
 
@@ -200,6 +202,8 @@ async function listWords() {
     wordIndexes = getSortedWordsArrayIndex(wordCounts);
 
     for (word of wordIndexes) {
+        console.log(word)
+        console.log(wordCounts)
         var wordTags = wordCounts[word];
         var totalCount = getWordTotalCount(wordTags);
         var tagIndexes = getSortedWordTagArrayIndex(wordTags);
@@ -297,6 +301,7 @@ function clusterItemsFromData(data) {
 
 async function selectWidgets(data) {
     var widgetIds = getWidgetIdsFromData(data);
+    console.log(widgetIds)
     var stickies = await getStickies();
 
     if (widgetIds.length) {
