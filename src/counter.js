@@ -127,6 +127,13 @@ function menuItem(data, shorten = false, expandable = true) {
     </li>`);
 }
 
+function stripHtml(html)
+{
+   let tmp = document.createElement("DIV");
+   tmp.innerHTML = html;
+   return tmp.textContent || tmp.innerText || "";
+}
+
 async function listWords() {
     toggleLoading();
 
@@ -157,11 +164,10 @@ async function listWords() {
     stickies = await filterCopies(stickies);
 
     for (widget of stickies) {
-        var text = widget.content
+        var text = stripHtml(widget.content)
             .replace(/[^A-Za-z0-9]/g, ' ')
             .toLowerCase()
             .replace(/\s\s+/g, ' ')
-            .replace(/<[^>]+>/g, ''); // Replace special characters into space and replace multiple spaces into single space
         var words = text.split(' ');
         var registeredTags = await getTags();
         var tagNames = registeredTags.map((tag) => tag.title);
