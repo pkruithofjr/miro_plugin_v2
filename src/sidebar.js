@@ -58,7 +58,7 @@ async function filterCopies(widgets) {
     return widgets.filter(widget => {
         console.log(widget)
         debugger
-        var hasCopyTag = widget.tags.some(copyTagId);
+        var hasCopyTag = widget.tagIds.some(copyTagId);
         var hasSameSecretId = false;
         if (hasCopyTag) {
             return false;
