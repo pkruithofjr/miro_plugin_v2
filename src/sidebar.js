@@ -49,9 +49,9 @@ async function filterCopies(widgets) {
     var repeated = [];
     var registeredTags = await getTags(); // get existed tags in board
     var copyTagId
-    for(tags in registeredTags) {
-        if(tags.title.toLowerCase() == 'copy') {
-            copyTagId = tags.id
+    for(i=0; i<registeredTags.length;i++) {
+        if(registeredTags[i].title.toLowerCase() == 'copy') {
+            copyTagId = registeredTags[i].id
             break
         }
     }

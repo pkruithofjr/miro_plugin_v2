@@ -154,7 +154,7 @@ async function listWords() {
         stickies = stickies.filter((widget) => widget.tags.findIndex((tag) => tag.title == selectedTag) != -1);
     }
 
-    stickies = filterCopies(stickies);
+    stickies = await filterCopies(stickies);
 
     for (widget of stickies) {
         var text = widget.plainText
