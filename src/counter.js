@@ -163,6 +163,7 @@ async function listWords() {
     }
 
     stickies = await filterCopies(stickies);
+    var registeredTags = await getTags();
 
     for (widget of stickies) {
         var text = stripHtml(widget.content)
@@ -170,9 +171,11 @@ async function listWords() {
             .toLowerCase()
             .replace(/\s\s+/g, ' ')
         var words = text.split(' ');
-        var registeredTags = await getTags();
-        var tagNames = registeredTags.map((tag) => tag.title);
-
+        var tagNames = widget.tagIds.map((tag) => {
+            for(i=0;i<registeredTags.length;i++) {
+                if(tag == registeredTags[i].id) return registeredTags[i].title
+            }
+        });
         for (word of words) {
             // Get word count in this widget
             if (stopList.indexOf(word) == -1) {
