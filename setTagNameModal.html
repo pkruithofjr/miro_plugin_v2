@@ -49,7 +49,7 @@
                     return;
                 }
 
-                tags =  await miro.board.tags.get();
+                tags =  await miro.board.get({type: "tag"})
                 if (value == '' || (tags.findIndex(tag => tag.title.toLowerCase() == value.toLowerCase()) > -1)) {
                     $('.status-text').hide();
                     $('.form-group').addClass('error');
@@ -57,15 +57,21 @@
                     return;
                 }
 
-                miro.board.metadata
-                    .update({
-                        [appId]: {
-                            focusedTagName: value,
-                        },
-                    })
+                // miro.board.metadata
+                //     .update({
+                //         [appId]: {
+                //             focusedTagName: value,
+                //         },
+                //     })
+                //     .then(() => {
+                //         miro.board.ui.closeModal();
+                //     });
+
+                await miro.board.setAppData('focusedTagName', value)
                     .then(() => {
                         miro.board.ui.closeModal();
                     });
+                    
             }
             function cancel() {
                 miro.board.metadata
