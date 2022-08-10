@@ -315,10 +315,10 @@ function getDimensionOfWidget(widgets) {
         bottom = -Infinity;
 
     widgets.forEach((sticky) => {
-        left = Math.min(left, sticky.bounds.left);
-        top = Math.min(top, sticky.bounds.top);
-        right = Math.max(right, sticky.bounds.right);
-        bottom = Math.max(bottom, sticky.bounds.bottom);
+        left = Math.min(left, sticky.x);
+        top = Math.min(top, sticky.y);
+        right = Math.max(right, sticky.x + sticky.width);
+        bottom = Math.max(bottom, sticky.y + sticky.height);
     });
 
     return { left, top, right, bottom };
