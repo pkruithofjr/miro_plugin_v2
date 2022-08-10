@@ -73,16 +73,11 @@
                     });
                     
             }
-            function cancel() {
-                miro.board.metadata
-                    .update({
-                        [appId]: {
-                            focusedTagName: null,
-                        },
-                    })
-                    .then(() => {
-                        miro.board.ui.closeModal();
-                    });
+            async function cancel() {
+                await miro.board.setAppData('focusedTagName', null)
+                .then(() => {
+                    miro.board.ui.closeModal();
+                });
             }
         </script>
     </body>
