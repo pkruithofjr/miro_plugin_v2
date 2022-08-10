@@ -307,9 +307,9 @@ async function selectWidgets(data) {
     console.log(widgetIds)
     var stickies = await getStickies();
 
-    if (widgetIds.length) {
-        await miro.board.selection.selectWidgets(widgetIds);
-    }
+    // if (widgetIds.length) {
+    //     await miro.board.selection.selectWidgets(widgetIds);
+    // }
     
     await focusOnWidgets(stickies.filter(sticky => widgetIds.includes(sticky.id)));
 }
@@ -320,28 +320,43 @@ async function addTagSelectedItem(data) {
 
     var widgetIds = getWidgetIdsFromData(data);
 
-    if (widgetIds.length) {
-        await miro.board.metadata.update({
-            [appId]: {
-                focusedTagName: data.word + (!data.tagName || data.tagName == NOTAG ? '' : data.word + '-' + data.tagName),
-            },
-        });
-        miro.board.ui.openModal('setTagNameModal.html', { width: 400, height: 300 }).then(() => {
-            miro.board.metadata.get().then(async (metadata) => {
-                if (metadata[appId].focusedTagName) {
-                    await miro.board.tags.create({
-                        color: randomColor(),
-                        title: metadata[appId].focusedTagName,
-                        widgetIds: widgetIds,
-                    });
+    await miro.board.setAppData('focusedTagName', {
+        focusedTagName: data.word + (!data.tagName || data.tagName == NOTAG ? '' : data.word + '-' + data.tagName),
+    });
+    miro.board.ui.openModal({
+        url: 'setTagNameModal.html',
+        width: 400,
+        height: 300,
+        fullscreen: false,
+    }).then(() => {
+        miro.board.getAppData('focusedTagName')
+        .then(async (metadata) => {
+            if (metadata[appId].focusedTagName) {
+                await miro.board.board.createTag({
+                    color: randomColor(),
+                    title: metadata,
+                    widgetIds: widgetIds,
+                });
 
-                    loadTagSelectOptions();
-                    listWords();
-                }
-                toggleLoading(false);
-            });
+                loadTagSelectOptions();
+                listWords();
+            }
+            toggleLoading(false);
         });
-    }
+        // miro.board.metadata.get().then(async (metadata) => {
+        //     if (metadata[appId].focusedTagName) {
+        //         await miro.board.tags.create({
+        //             color: randomColor(),
+        //             title: metadata[appId].focusedTagName,
+        //             widgetIds: widgetIds,
+        //         });
+
+        //         loadTagSelectOptions();
+        //         listWords();
+        //     }
+        //     toggleLoading(false);
+        // });
+    });
 }
 
 // Add a tag based on words
