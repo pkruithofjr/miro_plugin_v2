@@ -326,8 +326,8 @@ async function addTagSelectedItem(data) {
     miro.board.ui.openModal({
         url: 'setTagNameModal.html',
         width: 400,
-        height: 300,
-        fullscreen: false,
+        height: 250,
+        fullscreen: true,
     }).then(() => {
         miro.board.getAppData('focusedTagName')
         .then(async (metadata) => {
