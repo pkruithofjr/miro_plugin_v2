@@ -19,23 +19,32 @@
         <script>
             var appId = '3458764529472261466';
             var defaultValue = '';
-            miro.onReady(() => {
-                miro.board.metadata.get().then((data) => {
-                    console.log(data);
+            // miro.onReady(() => {
+            //     miro.board.metadata.get().then((data) => {
+            //         console.log(data);
 
-                    if (data[appId]) {
-                        $('#snapshotName').val(data[appId].focusedSnapshotName);
-                        defaultValue = data[appId].focusedSnapshotName;
+            //         if (data[appId]) {
+            //             $('#snapshotName').val(data[appId].focusedSnapshotName);
+            //             defaultValue = data[appId].focusedSnapshotName;
 
-                        miro.board.metadata
-                            .update({
-                                [appId]: {
-                                    focusedSnapshotName: null,
-                                },
-                            });
-                    }
-                });
-            });
+            //             miro.board.metadata
+            //                 .update({
+            //                     [appId]: {
+            //                         focusedSnapshotName: null,
+            //                     },
+            //                 });
+            //         }
+            //     });
+            // });
+
+            async function init() {
+                var focused = await miro.board.getAppData('focusedSnapshotName')
+                console.log(focused)
+            }
+
+            init();
+
+
 
             function confirm() {
                 value = $('#snapshotName').val();
