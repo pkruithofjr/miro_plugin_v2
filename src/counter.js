@@ -27,7 +27,7 @@ function loadTagSelectOptions() {
         $('#tag-select').html('<option value="all"> All </option>');
         tags.forEach((tag) => {
             if (tag.title.toLowerCase() != 'copy')
-                $('#tag-select').append(`<option value='${tag.title}'>${tag.title}</option>`);
+                $('#tag-select').append(`<option value='${tag.id}'>${tag.title}</option>`);
         });
         toggleLoading(false);
     });
@@ -159,7 +159,7 @@ async function listWords() {
 
     if (selectedTag !== 'all') {
         // filter stickied by selectedTag
-        stickies = stickies.filter((widget) => widget.tags.findIndex((tag) => tag.title == selectedTag) != -1);
+        stickies = stickies.filter((widget) => widget.tagIds.findIndex((tag) => tag == selectedTag) != -1);
     }
 
     stickies = await filterCopies(stickies);
@@ -327,7 +327,7 @@ async function addTagSelectedItem(data) {
         url: 'setTagNameModal.html',
         width: 400,
         height: 250,
-        fullscreen: true,
+        fullscreen: false,
     }).then(() => {
         miro.board.getAppData('focusedTagName')
         .then(async (metadata) => {
