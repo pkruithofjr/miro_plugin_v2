@@ -227,27 +227,38 @@ async function clusterWidgets(widgetIds, update = true) {
                 widget.sync()
             })
         } else {
-            newWidgets = await miro.board.widgets.create(
+            // newWidgets = await miro.board.widgets.create(
+            //     clusteringWidgets.map((widget, index) => {
+            //         newWidget = {
+            //             ...widget,
+            //             bounds: {
+            //                 ...widget.bounds,
+            //                 width: widgetWidth,
+            //                 height: widgetHeight,
+            //             },
+            //             metadata: {
+            //                 [appId]: {
+            //                     ...widget.metadata[appId],
+            //                     duplicated: true,
+            //                 }
+            //             },
+            //             x: widgetLocations[index].x,
+            //             y: widgetLocations[index].y,
+            //         };
+            //         return newWidget;
+            //     })
+            // );
+
+            newWidgets = await miro.board.createStickyNote(
                 clusteringWidgets.map((widget, index) => {
-                    newWidget = {
+                    netWidget = {
                         ...widget,
-                        bounds: {
-                            ...widget.bounds,
-                            width: widgetWidth,
-                            height: widgetHeight,
-                        },
-                        metadata: {
-                            [appId]: {
-                                ...widget.metadata[appId],
-                                duplicated: true,
-                            }
-                        },
                         x: widgetLocations[index].x,
                         y: widgetLocations[index].y,
-                    };
+                    }
                     return newWidget;
                 })
-            );
+            )
 
             newWidgets = await miro.board.widgets.update(
                 newWidgets.map((widget) => {
@@ -263,28 +274,40 @@ async function clusterWidgets(widgetIds, update = true) {
                 })
             );
 
+            newWidgets.map((widget) => {
+                widget.style.fillColor = "GREEN "
+            })
+
             var tags = await getTags();
             var copyTagIndex = tags.findIndex((tag) => tag.title == 'Copy')
 
-            tags.forEach((tag) => {
-                clusteringWidgets.forEach((widget, index) => {
-                    if (tag.widgetIds.indexOf(widget.id) > -1) {
-                        tag.widgetIds.push(newWidgets[index].id);
-                    }
-                });
-            });
+            // tags.forEach((tag) => {
+            //     clusteringWidgets.forEach((widget, index) => {
+            //         if (tag.widgetIds.indexOf(widget.id) > -1) {
+            //             tag.widgetIds.push(newWidgets[index].id);
+            //         }
+            //     });
+            // });
 
             if (copyTagIndex == -1) {
-                await miro.board.tags.create({
-                    color: randomColor(),
+                var newCopyTag = await miro.board.createTag({
+                    color: "blue",
                     title: 'Copy',
                     widgetIds: newWidgets.map(widget => widget.id)
                 })
+                clusteringWidgets.forEach((widget, index) => {
+                    widget.tagIds.push(newCopyTag.id)
+                    widget.sync()
+                })
             } else {
-                tags[copyTagIndex].widgetIds.concat(newWidgets.map(widget => widget.id))
+                clusteringWidgets.forEach((widget, index) => {
+                    widget.tagIds.push(tags[copyTagIndex].id)
+                    widget.sync()
+                })
+                // tags[copyTagIndex].widgetIds.concat(newWidgets.map(widget => widget.id))
             }
 
-            await miro.board.tags.update(tags);
+            // await miro.board.tags.update(tags);
         }
 
         await miro.board.viewport.zoomTo(clusteringWidgets)
