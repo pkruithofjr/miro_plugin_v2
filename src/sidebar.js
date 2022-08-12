@@ -42,7 +42,7 @@ function getStickyById(stickies, id) {
     return stickies[stickies.findIndex((widget) => (widget.id = id))];
 }
 async function getTags() {
-    return await miro.board.get({type: "tag"})
+    return await miro.board.get({type:['tag']})
 }
 
 async function filterCopies(widgets) {

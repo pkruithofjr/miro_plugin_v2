@@ -49,7 +49,7 @@
                     return;
                 }
 
-                tags =  await miro.board.get({type: "tag"})
+                tags =  await miro.board.get({type:['tag']})
                 if (value == '' || (tags.findIndex(tag => tag.title.toLowerCase() == value.toLowerCase()) > -1)) {
                     $('.status-text').hide();
                     $('.form-group').addClass('error');
