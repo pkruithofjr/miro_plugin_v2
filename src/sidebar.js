@@ -311,7 +311,7 @@ async function clusterWidgets(widgetIds, update = true) {
         }
 
         await miro.board.viewport.zoomTo(clusteringWidgets)
-
+ 
         toggleLoading(false);
         return newWidgets;
     }

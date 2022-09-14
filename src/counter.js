@@ -13,7 +13,7 @@ $.getJSON('src/nltk_stoplist.json', (data) => {
 function analyzeStopList() {
     var list = $('#stopList').val().toLowerCase().replace(/\s/g, '').split(',');
     list.push('');
-    list = defaultStopList.concat(list);
+    //list = defaultStopList.concat(list);
     return list;
 }
 

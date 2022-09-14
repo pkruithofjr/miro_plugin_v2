@@ -128,7 +128,7 @@ async function clusterStickiesOfTag(tagId) {
 
     stickies = await getStickies();
     stickies = filterCopies(stickies);
-    await clusterWidgets(stickies.filter((widget) => widget.tags.some((tag) => tag.id == tagId)).map((widget) => widget.id));
+    await clusterWidgets(stickies.filter((widget) => widget.tagIds.some((tag) => tag == tagId)).map((widget) => widget.id));
 
     toggleLoading(false);
 }
