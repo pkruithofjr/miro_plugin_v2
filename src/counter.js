@@ -329,10 +329,11 @@ async function addTagSelectedItem(data) {
         height: 250,
         fullscreen: false,
     }).then(() => {
-        miro.board.getAppData('focusedTagName')
-        .then(async (metadata) => {
-            if (metadata[appId].focusedTagName) {
-                await miro.board.board.createTag({
+        console.log("setTagNameModal closed")
+        miro.board.getAppData('focusedTagName').then(async (metadata) => {
+            if (metadata) {
+                console.log(metadata)
+                await miro.board.createTag({
                     color: randomColor(),
                     title: metadata,
                     widgetIds: widgetIds,
