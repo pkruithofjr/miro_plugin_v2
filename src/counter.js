@@ -334,8 +334,8 @@ async function addTagSelectedItem(data) {
             if (metadata) {
                 console.log(metadata)
                 newTag = await miro.board.createTag({
-                    color: "yellow",
-                    title: metadata.focusedTagName,
+                    color: randomTagColor(),
+                    title: metadata,
                 });
                 
                 widgetIds.forEach(async (widget, index) =>  {

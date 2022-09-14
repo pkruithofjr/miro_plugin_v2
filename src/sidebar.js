@@ -17,6 +17,17 @@ function randomColor() {
     const blue = Math.floor((Math.random() * 256) / 2);
     return '#' + red.toString(16) + green.toString(16) + blue.toString(16);
 }
+
+function randomTagColor() {
+    const tagColor = ["red", "magenta", "violet", "light_green", "green", "dark_green", "cyan", "blue", "dark_blue", "yellw", "gray", "black"]
+    return tagColor[Math.floor(Math.random()*12)]
+}
+
+function randomNoteColor() {
+    const tagColor = ["gray", "light_yellow", "yellow", "orange", "light_green", "green", "dark_green", "cyan", "light_pink", "pink", "violet", "red", "light_blue", "blue", "dark_blue", "black"]
+    return tagColor[Math.floor(Math.random()*16)]
+}
+
 function randomBrightColor() {
     const red = Math.floor(((1 + Math.random()) * 256) / 2);
     const green = Math.floor(((1 + Math.random()) * 256) / 2);
@@ -221,7 +232,7 @@ async function clusterWidgets(widgetIds, update = true) {
 
         if (update == true) {
             clusteringWidgets.map((widget, index) => {
-                widget.style.fillColor = "light_pink"
+                widget.style.fillColor = randomNoteColor()
                 widget.x = widgetLocations[index].x
                 widget.y = widgetLocations[index].y
                 widget.sync()
