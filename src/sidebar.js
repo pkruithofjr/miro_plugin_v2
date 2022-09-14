@@ -228,11 +228,11 @@ async function clusterWidgets(widgetIds, update = true) {
 
         var { widgetLocations, clusteringWidgets, widgetWidth, widgetHeight } = await getClusteringWidgetLocation(widgetIds);
         let newWidgets = [];
-        let backgroundColor = randomBrightColor();
+        let backgroundColor = randomNoteColor();
 
         if (update == true) {
             clusteringWidgets.map((widget, index) => {
-                widget.style.fillColor = randomNoteColor()
+                widget.style.fillColor = backgroundColor
                 widget.x = widgetLocations[index].x
                 widget.y = widgetLocations[index].y
                 widget.sync()
