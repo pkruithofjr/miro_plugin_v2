@@ -333,12 +333,17 @@ async function addTagSelectedItem(data) {
         miro.board.getAppData('focusedTagName').then(async (metadata) => {
             if (metadata) {
                 console.log(metadata)
-                await miro.board.createTag({
-                    color: randomColor(),
-                    title: metadata,
-                    widgetIds: widgetIds,
+                newTag = await miro.board.createTag({
+                    color: "yellow",
+                    title: metadata.focusedTagName,
                 });
-
+                
+                widgetIds.forEach(async (widget, index) =>  {
+                    widget = await miro.board.getById(widget)
+                    widget.tagIds.push(newTag.id)
+                    widget.sync()
+                })
+                
                 loadTagSelectOptions();
                 listWords();
             }

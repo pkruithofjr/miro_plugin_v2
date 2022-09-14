@@ -73,14 +73,14 @@
                 //         miro.board.ui.closeModal();
                 //     });
 
-                await miro.board.setAppData('focusedTagName', value)
+                miro.board.setAppData('focusedTagName', value)
                     .then(() => {
                         miro.board.ui.closeModal();
                     });
                     
             }
             async function cancel() {
-                await miro.board.setAppData('focusedTagName', null)
+                miro.board.setAppData('focusedTagName', null)
                 .then(() => {
                     miro.board.ui.closeModal();
                 });
