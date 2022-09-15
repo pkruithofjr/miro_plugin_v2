@@ -237,6 +237,8 @@ async function clusterWidgets(widgetIds, update = true) {
                 widget.y = widgetLocations[index].y
                 widget.sync()
             })
+            await miro.board.viewport.zoomTo(clusteringWidgets)
+
         } else {
             // newWidgets = await miro.board.widgets.create(
             //     clusteringWidgets.map((widget, index) => {
@@ -298,11 +300,12 @@ async function clusterWidgets(widgetIds, update = true) {
                 })
                 // tags[copyTagIndex].widgetIds.concat(newWidgets.map(widget => widget.id))
             }
+            await miro.board.viewport.zoomTo(newWidgets)
+
 
             // await miro.board.tags.update(tags);
         }
 
-        await miro.board.viewport.zoomTo(newWidgets)
  
         toggleLoading(false);
         return newWidgets;
