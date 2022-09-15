@@ -28,7 +28,7 @@ $('#searchApply').on('click', async function () {
     var stickies = await getStickies();
 
     var selectedWidgets = filterCopies(stickies);
-    var selectedWidgets = selectedWidgets.filter((sticky) => {
+    var selectedWidgets = await selectedWidgets.filter((sticky) => {
         return keywords.some((word) => sticky.plainText.toLowerCase().indexOf(word.toLowerCase()) > -1);
     });
     var selectedIds = selectedWidgets.map((sticky) => sticky.id);
@@ -127,7 +127,7 @@ async function clusterStickiesOfTag(tagId) {
     toggleLoading(true);
 
     stickies = await getStickies();
-    stickies = filterCopies(stickies);
+    stickies = await filterCopies(stickies);
     await clusterWidgets(stickies.filter((widget) => widget.tagIds.some((tag) => tag == tagId)).map((widget) => widget.id));
 
     toggleLoading(false);
