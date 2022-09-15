@@ -3,7 +3,7 @@ var addOnAppId = '3074457360238945885';
 var defaultWidgetWidth = 199,
     defaultWidgetHeight = 228,
     defaultMargin = 30;
-var duplicationColor = '#ff3333';
+var duplicationColor = 'cyan';
 
 document.addEventListener("keydown", function(event) {
     if (event.ctrlKey && event.code === "KeyQ") {
@@ -259,35 +259,17 @@ async function clusterWidgets(widgetIds, update = true) {
             //         return newWidget;
             //     })
             // );
-
-            newWidgets = await miro.board.createStickyNote(
-                clusteringWidgets.map((widget, index) => {
-                    netWidget = {
-                        ...widget,
-                        x: widgetLocations[index].x,
-                        y: widgetLocations[index].y,
-                    }
-                    return newWidget;
+            for(i=0; i<clusteringWidgets.length; i++) {
+                newWidget = clusteringWidgets[i]
+                newWidget.x = widgetLocations[i].x
+                newWidget.y = widgetLocations[i].y
+                newWidget.style.fillColor = "green"
+                delete newWidget.height
+                note = await miro.board.createStickyNote({
+                    ...newWidget,
                 })
-            )
-
-            newWidgets = await miro.board.widgets.update(
-                newWidgets.map((widget) => {
-                    return {
-                        ...widget,
-                        metadata: {
-                            [appId]: widget.metadata[appId],
-                        },
-                        style: {
-                            stickerBackgroundColor: duplicationColor,
-                        },
-                    };
-                })
-            );
-
-            newWidgets.map((widget) => {
-                widget.style.fillColor = "GREEN "
-            })
+                newWidgets.push(note)
+            }
 
             var tags = await getTags();
             var copyTagIndex = tags.findIndex((tag) => tag.title == 'Copy')
@@ -302,16 +284,15 @@ async function clusterWidgets(widgetIds, update = true) {
 
             if (copyTagIndex == -1) {
                 var newCopyTag = await miro.board.createTag({
-                    color: "blue",
+                    color: randomTagColor(),
                     title: 'Copy',
-                    widgetIds: newWidgets.map(widget => widget.id)
                 })
-                clusteringWidgets.forEach((widget, index) => {
+                newWidgets.forEach((widget, index) => {
                     widget.tagIds.push(newCopyTag.id)
                     widget.sync()
                 })
             } else {
-                clusteringWidgets.forEach((widget, index) => {
+                newWidgets.forEach((widget, index) => {
                     widget.tagIds.push(tags[copyTagIndex].id)
                     widget.sync()
                 })
@@ -321,7 +302,7 @@ async function clusterWidgets(widgetIds, update = true) {
             // await miro.board.tags.update(tags);
         }
 
-        await miro.board.viewport.zoomTo(clusteringWidgets)
+        await miro.board.viewport.zoomTo(newWidgets)
  
         toggleLoading(false);
         return newWidgets;

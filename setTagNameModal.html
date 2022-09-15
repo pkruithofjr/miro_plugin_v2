@@ -74,7 +74,7 @@
                 //     });
 
                 await miro.board.setAppData('focusedTagName', value)
-                await miro.board.ui.closeModal();
+                miro.board.ui.closeModal();
                     
             }
             async function cancel() {
