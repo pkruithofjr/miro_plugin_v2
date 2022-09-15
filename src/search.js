@@ -27,14 +27,13 @@ $('#searchApply').on('click', async function () {
 
     var stickies = await getStickies();
 
-    var selectedWidgets = filterCopies(stickies);
-    var selectedWidgets = await selectedWidgets.filter((sticky) => {
-        return keywords.some((word) => sticky.plainText.toLowerCase().indexOf(word.toLowerCase()) > -1);
+    var selectedWidgets = await filterCopies(stickies);
+    var selectedWidgets = selectedWidgets.filter((sticky) => {
+        return keywords.some((word) => sticky.content.toLowerCase().indexOf(word.toLowerCase()) > -1);
     });
     var selectedIds = selectedWidgets.map((sticky) => sticky.id);
 
     if (selectedIds.length) {
-        await miro.board.selection.selectWidgets(selectedIds);
         await focusOnWidgets(selectedWidgets);
     }
 
@@ -43,26 +42,33 @@ $('#searchApply').on('click', async function () {
 
 $('#createTagApply').on('click', async function () {
     toggleLoading(true);
-    await miro.board.metadata.update({
-        [appId]: {
-            focusedTagName: 'Tag',
-        },
-    });
+    await miro.board.setAppData('focusedTagName', "Tag");
 
-    miro.board.ui.openModal('setTagNameModal.html', { width: 400, height: 300 }).then(() => {
-        miro.board.metadata.get().then(async (metadata) => {
-            if (metadata[appId].focusedTagName) {
-                var selectedStickies = await miro.board.selection.get();
-                selectedStickies = filterCopies(selectedStickies)
-
-                await miro.board.tags.create({
-                    color: randomColor(),
-                    title: metadata[appId].focusedTagName,
-                    widgetIds: selectedStickies.map((widget) => widget.id),
+    miro.board.ui.openModal({
+        url: 'setTagNameModal.html',
+        width: 400,
+        height: 250,
+        fullscreen: false,
+    }).then(() => {
+        console.log("setTagNameModal closed")
+        miro.board.getAppData('focusedTagName').then(async (metadata) => {
+            if (metadata) {
+                console.log(metadata)
+                newTag = await miro.board.createTag({
+                    color: randomTagColor(),
+                    title: metadata,
                 });
-
-                loadTagList();
+                
+                widgetIds.forEach(async (widget, index) =>  {
+                    widget = await miro.board.getById(widget)
+                    widget.tagIds.push(newTag.id)
+                    widget.sync()
+                })
+                
+                loadTagSelectOptions();
+                listWords();
             }
+            toggleLoading(false);
         });
     });
     toggleLoading(false);
@@ -113,11 +119,15 @@ async function addTagToSelectedStickies(tagId) {
     var index = tags.findIndex((tag) => tag.id == tagId);
 
     if (index > -1) {
-        var selectedStickies = await miro.board.selection.get();
-        selectedStickies = filterCopies(selectedStickies);
-
-        tags[index].widgetIds = tags[index].widgetIds.concat(selectedStickies.map((widget) => widget.id));
-        await miro.board.tags.update(tags[index]);
+        var selectedStickies = await miro.board.getSelection();
+        selectedStickies = await filterCopies(selectedStickies);
+        console.log(selectedStickies)
+        console.log(tags[index])
+        selectedStickies.map((widget) => {
+            widget.tagIds.push(tags[index].id)
+            console.log(tags[index].id)
+            widget.sync()
+        })
     }
 
     toggleLoading(false);
