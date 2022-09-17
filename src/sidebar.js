@@ -85,9 +85,9 @@ async function filterCopies(widgets) {
     })
 }
 async function getSnapshots() {
-    var data = await miro.board.metadata.get();
-    if (data[appId]) {
-        return data[appId].snapshots ? data[appId].snapshots : [];
+    var data = await miro.board.getAppData('snapshots')
+    if (data) {
+        return data;
     }
     return [];
 }

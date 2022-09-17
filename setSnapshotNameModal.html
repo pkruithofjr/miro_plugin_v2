@@ -4,11 +4,11 @@
         <title>Miro - FluidMemory</title>
         <link rel="stylesheet" href="https://unpkg.com/mirotone/dist/styles.css" />
     </head>
-    <body style="padding: 30px; box-sizing: border-box">
+    <body style="box-sizing: border-box">
         <h1>Create Snapshot</h1>
         <div class="form-group">
             <label>Snapshot</label>
-            <input class="input" type="text" placeholder="Snapshot Name" id="snapshotName" />
+            <input class="input" type="text" placeholder="Snapshot Name" id="snapshotName" style="width: 90%;"/>
             <div style="display: flex; justify-content: space-between">
                 <button class="button button-primary" style="margin: 10px; margin-left: 0" type="button" onclick="confirm()">OK</button>
                 <button class="button button-danger" style="margin: 10px; margin-right: 0" type="button" onclick="cancel()">CANCEL</button>
@@ -46,31 +46,26 @@
 
 
 
-            function confirm() {
+            async function confirm() {
                 value = $('#snapshotName').val();
                 if ($('#snapshotName').val() == '') {
                     value = defaultValue;
                 }
-                miro.board.metadata
-                    .update({
-                        [appId]: {
-                            focusedSnapshotName: value,
-                        },
-                    })
-                    .then(() => {
-                        miro.board.ui.closeModal();
-                    });
+                await miro.board.setAppData('focusedSnapshotName', value)
+                await miro.board.ui.closeModal();
+                // miro.board.metadata
+                //     .update({
+                //         [appId]: {
+                //             focusedSnapshotName: value,
+                //         },
+                //     })
+                //     .then(() => {
+                //         miro.board.ui.closeModal();
+                //     });
             }
-            function cancel() {
-                miro.board.metadata
-                    .update({
-                        [appId]: {
-                            focusedSnapshotName: null,
-                        },
-                    })
-                    .then(() => {
-                        miro.board.ui.closeModal();
-                    });
+            async function cancel() {
+                await miro.board.setAppData('focusedSnapshotName', null)
+                await miro.board.ui.closeModal();
             }
         </script>
     </body>

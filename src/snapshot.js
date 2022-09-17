@@ -129,10 +129,38 @@ $('#addSnapshot').on('click', async () => {
         },
     });
 
+    await miro.board.setAppData('focusedSnapshotName','Snapshot')
+
     var stickies = await getStickies();
     var tags = await getTags();
 
-    miro.board.ui.openModal('setSnapshotNameModal.html', { width: 400, height: 300 }).then(() => {
+    miro.board.ui.openModal({
+        url: 'setSnapshotNameModal.html',
+        width: 400,
+        height: 250,
+        fullscreen: false,
+    }).then(() => {
+        miro.board.getAppData("focusedSnapshotName").then(async (metadata) => {
+            if (metadata) {
+                snapshots = await miro.board.getAppData("snapshots")
+                if (!snapshots || !snapshots.length) {
+                    await miro.board.setAppData("snapshots", [])
+                    snapshots = []
+                }
+
+                snapshots.push({
+                    id: randomId(),
+                    name: metadata,
+                    stickies,
+                    tags
+                })
+                await miro.board.setAppData('snapshots', snapshots)
+                
+                loadSnapshotsToList();
+            }
+            toggleLoading(false);
+        });
+
         miro.board.metadata.get().then(async (metadata) => {
             if (metadata[appId].focusedSnapshotName) {
                 if (!metadata[appId].snapshots || !metadata[appId].snapshots.length) metadata[appId].snapshots = [];
