@@ -32,6 +32,14 @@ async function getSnapshotById(snapshotId) {
     return snapshots[snapshotIndex];
 }
 
+function convertId(prev, next, now) {
+    var res = []
+    for(i=0;i<now.length;i++) {
+        res.push(next[prev.findIndex(now[i])])
+    }
+    return res
+}
+
 async function moveToSnapshot(snapshotId) {
     if (confirm("You will lose all of the current stickies and you'd better take a new snapshot of the current board. Do you want to reset and load this snapshot?")) {
         toggleLoading(true);
@@ -40,8 +48,42 @@ async function moveToSnapshot(snapshotId) {
         var oldTags = await getTags();
         var oldStickies = await getStickies();
 
-        await miro.board.tags.delete(oldTags.map((item) => item.id));
-        await miro.board.widgets.deleteById(oldStickies.map((item) => item.id));
+        oldTags.forEach(async (tag) => {
+            await miro.board.remove(tag);
+        })
+        oldStickies.forEach(async (sticky) => {
+            await miro.board.remove(sticky);
+        })
+
+
+        var newTags = []
+        for(i=0;i<snapshot.tags.length;i++) {
+            newTag = await miro.board.createTag({color: snapshot.tags[i].color, title: snapshot.tags[i].title})
+            newTags.push(newTag)
+        }
+        console.log(await miro.board.get({type:['tag']}))
+
+        var newWidgets = [];
+        for(i=0;i<snapshot.stickies.length;i++) {
+            newNote = snapshot.stickies[i]
+            delete newNote.Id
+            delete newNote.height
+            newNote.tagIds = convertId(oldStickies.tagIds, snapshot.stickies.tagIds, newNote.tagIds)
+            var newNote = await miro.board.createStickyNote(newNote)
+            newNote.sync()
+            newWidgets.push(newNote)
+        }
+        snapshot.stickies.forEach(async (sticky) => {
+            delete newNote.Id
+            delete newNote.height
+            newNote.tagIds = convertId(oldStickies.tagIds, snapshot.stickies.tagIds, newNote.tagIds)
+            var newNote = await miro.board.createStickyNote(sticky)
+            newNote.sync()
+            newWidgets.push(newNote)
+        })
+
+        await miro.board.remove(oldTags.map((item) => item));
+        await miro.board.remove(oldStickies.map((item) => item));
 
         var newWidgets = await miro.board.widgets.create(
             snapshot.stickies.map((sticky) => {
@@ -79,6 +121,20 @@ async function updateSnapshot(snapshotId) {
     var stickies = await getStickies();
     var tags = await getTags();
     var snapshot = await getSnapshotById(snapshotId);
+
+    miro.board.getAppData("snapshots").then(async (metadata) => {
+        var index = metadata.findIndex((item) => item.id == snapshot.id);
+        snapshots = metadata
+        if (index > -1) {
+
+            snapshots[index].stickies = stickies;
+            snapshots[index].tags = tags;
+        }
+        await miro.board.setAppData("snapshots", snapshots)
+
+        toggleLoading(false);
+        loadSnapshotsToList();
+    });
 
     miro.board.metadata.get().then(async (metadata) => {
         var index = metadata[appId].snapshots.findIndex((item) => item.id == snapshot.id);
@@ -122,12 +178,6 @@ function removeSnapshot(snapshotId) {
 
 $('#addSnapshot').on('click', async () => {
     toggleLoading(true);
-
-    await miro.board.metadata.update({
-        [appId]: {
-            focusedSnapshotName: 'Snapshot',
-        },
-    });
 
     await miro.board.setAppData('focusedSnapshotName','Snapshot')
 
