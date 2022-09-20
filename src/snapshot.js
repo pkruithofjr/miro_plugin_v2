@@ -35,7 +35,7 @@ async function getSnapshotById(snapshotId) {
 function convertId(prev, next, now) {
     var res = []
     for(i=0;i<now.length;i++) {
-        res.push(next[prev.findIndex(now[i])])
+        res.push(next[prev.indexOf(now[i])])
     }
     return res
 }
@@ -57,60 +57,21 @@ async function moveToSnapshot(snapshotId) {
 
 
         var newTags = []
+        var prevTags = []
         for(i=0;i<snapshot.tags.length;i++) {
             newTag = await miro.board.createTag({color: snapshot.tags[i].color, title: snapshot.tags[i].title})
-            newTags.push(newTag)
+            prevTags.push(snapshot.tags[i].id)
+            newTags.push(newTag.id)
         }
         console.log(await miro.board.get({type:['tag']}))
 
-        var newWidgets = [];
         for(i=0;i<snapshot.stickies.length;i++) {
-            newNote = snapshot.stickies[i]
-            delete newNote.Id
+            var newNote = snapshot.stickies[i]
+            delete newNote.id
             delete newNote.height
-            newNote.tagIds = convertId(oldStickies.tagIds, snapshot.stickies.tagIds, newNote.tagIds)
-            var newNote = await miro.board.createStickyNote(newNote)
-            newNote.sync()
-            newWidgets.push(newNote)
+            newNote.tagIds = convertId(prevTags, newTags, newNote.tagIds)
+            await miro.board.createStickyNote(newNote)
         }
-        snapshot.stickies.forEach(async (sticky) => {
-            delete newNote.Id
-            delete newNote.height
-            newNote.tagIds = convertId(oldStickies.tagIds, snapshot.stickies.tagIds, newNote.tagIds)
-            var newNote = await miro.board.createStickyNote(sticky)
-            newNote.sync()
-            newWidgets.push(newNote)
-        })
-
-        await miro.board.remove(oldTags.map((item) => item));
-        await miro.board.remove(oldStickies.map((item) => item));
-
-        var newWidgets = await miro.board.widgets.create(
-            snapshot.stickies.map((sticky) => {
-                return {
-                    ...sticky,
-                    metadata: {
-                        [appId]: sticky.metadata[appId],
-                    },
-                };
-            })
-        );
-        var newTags = snapshot.tags.map((tag) => {
-            tag.widgetIds = [];
-            return tag;
-        });
-
-        newWidgets.forEach((widget, index) => {
-            oldWidget = snapshot.stickies[index];
-            oldWidget.tags.forEach((widgetTag) => {
-                index = newTags.findIndex((item) => item.id == widgetTag.id);
-                if (index > -1) {
-                    newTags[index].widgetIds.push(widget.id);
-                }
-            });
-        });
-        await miro.board.tags.create(newTags);
-
         toggleLoading(false);
     }
 }
