@@ -9,9 +9,9 @@
         <div class="form-group">
             <label>Snapshot</label>
             <input class="input" type="text" placeholder="Snapshot Name" id="snapshotName" style="width: 90%;"/>
-            <div style="display: flex; justify-content: space-between">
-                <button class="button button-primary" style="margin: 10px; margin-left: 0" type="button" onclick="confirm()">OK</button>
-                <button class="button button-danger" style="margin: 10px; margin-right: 0" type="button" onclick="cancel()">CANCEL</button>
+            <div>
+                <button class="button button-danger" style="margin: 10px; margin-right: 0; float: right;" type="button" onclick="cancel()">CANCEL</button>
+                <button class="button button-primary" id="confirm_btn" style="margin: 10px; margin-left: 0; float: right;" type="button" onclick="confirm()">OK</button>
             </div>
         </div>
         <script src="https://unpkg.com/jquery"></script>
@@ -52,6 +52,7 @@
                     value = defaultValue;
                 }
                 await miro.board.setAppData('focusedSnapshotName', value)
+                $("#confirm_btn").text("Done")
                 // await miro.board.ui.closeModal();
                 // miro.board.metadata
                 //     .update({
