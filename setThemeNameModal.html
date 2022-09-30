@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Miro - FluidMemory</title>
+        <link rel="stylesheet" href="https://unpkg.com/mirotone/dist/styles.css" />
+    </head>
+    <body style="box-sizing: border-box">
+        <h1>Create Theme</h1>
+        <div class="form-group">
+            <label>Theme name</label>
+            <input class="input" type="text" placeholder="Theme Name" id="themeName" style="width: 364px;"/>
+            <div class="status-text duplicate-error" style='display: none;'>The theme name is duplicated or blank</div>
+            <div style="float: right; margin-top: 10px;" id="btn_group">
+                <button class="button button-primary" id="confirm_btn" type="button" onclick="confirm()">OK</button>
+                <button class="button button-danger" type="button" onclick="cancel()">CANCEL</button>
+            </div>
+            <div style="float: right; margin-top: 10px; display: none;" id="check_group">
+                <img src="src/check.png" style="float: right; width: 30px;"/>
+            </div>
+        </div>
+        <script src="https://unpkg.com/jquery"></script>
+        <script src="https://miro.com/app/static/sdk/v2/miro.js"></script>
+        <script>
+            var appId = '3458764529472261466';
+            var defaultValue = '';
+            // miro.onReady(() => {
+            //     miro.board.metadata.get().then((data) => {
+            //         console.log(data);
+
+            //         if (data[appId]) {
+            //             $('#tagName').val(data[appId].focusedTagName);
+            //             defaultValue = data[appId].focusedTagName;
+
+            //             miro.board.metadata
+            //                 .update({
+            //                     [appId]: {
+            //                         focusedTagName: null,
+            //                     },
+            //                 });
+            //         }
+            //     });
+            // });
+
+            async function init() {
+                var focused = await miro.board.getAppData('focusedSnapshotName')
+            }
+
+            init();
+
+            async function confirm() {
+                value = $('#tagName').val();
+
+                if (value.toLowerCase() == 'copy') {
+                    $('.status-text').hide();
+                    $('.form-group').addClass('error');
+                    $('.copy-error').show();
+                    return;
+                }
+
+                tags =  await miro.board.get({type:['tag']})
+                if (value == '' || (tags.findIndex(tag => tag.title.toLowerCase() == value.toLowerCase()) > -1)) {
+                    $('.status-text').hide();
+                    $('.form-group').addClass('error');
+                    $('.duplicate-error').show();
+                    return;
+                }
+
+                // miro.board.metadata
+                //     .update({
+                //         [appId]: {
+                //             focusedTagName: value,
+                //         },
+                //     })
+                //     .then(() => {
+                //         miro.board.ui.closeModal();
+                //     });
+
+                await miro.board.setAppData('focusedTagName', value)
+                $("#btn_group").hide()
+                $("#check_group").show()
+                // miro.board.ui.closeModal();
+                    
+            }
+            async function cancel() {
+                miro.board.setAppData('focusedTagName', null)
+                .then(() => {
+                    miro.board.ui.closeModal();
+                });
+            }
+        </script>
+    </body>
+</html>
