@@ -40,9 +40,7 @@ function loadTabTheme() {
     getThemes().then((themes) => {
         $("#themeList").html('')
         if(themes && themes.length) {
-            themes.forEach((theme) => {
                 genList(theme)
-            })
         }
         toggleLoading(false)
     })
