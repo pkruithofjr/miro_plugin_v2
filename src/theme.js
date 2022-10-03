@@ -67,7 +67,7 @@ $('#addTheme').on('click', async () => {
         height: 250,
         fullscreen: false,
     }).then(() => {
-        miro.board.getAppData("focused").then(async (metadata) => {
+        miro.board.getAppData("focusedThemeName").then(async (metadata) => {
             if (metadata) {
                 const frame = await miro.board.createFrame({
                     title: metadata,
