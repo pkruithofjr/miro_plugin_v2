@@ -21,14 +21,14 @@
                         <div tabindex="1" class="tab tab-active" data-tabbtn="tab-count">
                             <div class="tab-text tab-count">Count</div>
                         </div>
-                        <div tabindex="2" class="tab" data-tabbtn="tab-search">
+                        <div tabindex="2" class="tab" data-tabbtn="tab-theme">
+                            <div class="tab-text tab-theme">Theme</div>
+                        </div>
+                        <div tabindex="3" class="tab" data-tabbtn="tab-search">
                             <div class="tab-text tab-search">Search</div>
                         </div>
-                        <div tabindex="3" class="tab" data-tabbtn="tab-snapshots">
+                        <div tabindex="4" class="tab" data-tabbtn="tab-snapshots">
                             <div class="tab-text tab-snapshots">Snapshot</div>
-                        </div>
-                        <div tabindex="3" class="tab" data-tabbtn="tab-theme">
-                            <div class="tab-text tab-theme">Theme</div>
                         </div>
                     </div>
                 </div>
@@ -116,6 +116,7 @@
         <script src="src/counter.js"></script>
         <script src="src/snapshot.js"></script>
         <script src="src/search.js"></script>
+        <script src="src/theme.js"></script>
         <!-- <script src="src/cluster.js"></script> -->
         <script>
             var appId = '3458764529472261466'
@@ -174,6 +175,8 @@
                     loadSnapshotsToList();
                 } else if (tabId == 'tab-search') {
                     loadTagList();
+                } else if(tabId == 'tab-theme') {
+                    loadTabTheme();
                 }
                 // } else if (tabId == 'tab-cluster') {
                 //     loadGroupsToList();
