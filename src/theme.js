@@ -15,6 +15,7 @@ function addThemeList(theme) {
 
 async function genList(themes) {
     var wordCount
+    var stopList = analyzeStopList();
     for(i=0; i<themes.length; i++) {
         const children = await themes[i].getChildren()
         for(j=0; j<children.length; j++) {
@@ -59,6 +60,7 @@ $('#addTheme').on('click', async () => {
     var tags = await getTags();
     var themes = await getThemes();
     var viewport = await miro.board.viewport.get()
+    
     miro.board.ui.openModal({
         url: 'setThemeNameModal.html',
         width: 400,
