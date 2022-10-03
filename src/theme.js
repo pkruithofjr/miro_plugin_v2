@@ -2,6 +2,10 @@ function loadTabTheme() {
     
 }
 
+async function getThemes() {
+
+}
+
 $('#addTheme').on('click', async () => {
     toggleLoading(true);
 
