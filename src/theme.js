@@ -14,7 +14,7 @@ function addThemeList(theme) {
 }
 
 async function genList(themes) {
-    var wordCount
+    var wordCount = []
     var stopList = analyzeStopList();
     for(i=0; i<themes.length; i++) {
         const children = await themes[i].getChildren()
@@ -76,8 +76,8 @@ $('#addTheme').on('click', async () => {
                     },
                     width: 800,
                     height: 450,
-                    x: viewport.x + x + viewport.width / 2,
-                    y: viewport.y + y + viewport.height / 2,
+                    x: viewport.x + viewport.width / 2,
+                    y: viewport.y + viewport.height / 2,
                 });
                 await miro.board.viewport.zoomTo(frame)
             }
