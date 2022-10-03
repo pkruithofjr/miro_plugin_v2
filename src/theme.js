@@ -2,7 +2,7 @@ function addThemeList(theme) {
     $('#themeList').append(`
         <li class="menu-item" title="${theme.title}">
             <a href="#" onclick='moveToSnapshot(${theme.id})'>
-                <div class="word-name">${snapshot.name}</div>
+                <div class="word-name"></div>
                 &nbsp;
             </a>
             <div class="action">
@@ -32,6 +32,7 @@ async function genList(themes) {
             }
         }
     }
+    console.log(wordCount)
 }
 
 function loadTabTheme() {
@@ -40,7 +41,7 @@ function loadTabTheme() {
         $("#themeList").html('')
         if(themes && themes.length) {
             themes.forEach((theme) => {
-                addThemeList(theme)
+                genList(theme)
             })
         }
         toggleLoading(false)
