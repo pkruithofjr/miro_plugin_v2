@@ -48,17 +48,10 @@
             init();
 
             async function confirm() {
-                value = $('#tagName').val();
+                value = $('#themeName').val();
 
-                if (value.toLowerCase() == 'copy') {
-                    $('.status-text').hide();
-                    $('.form-group').addClass('error');
-                    $('.copy-error').show();
-                    return;
-                }
-
-                tags =  await miro.board.get({type:['tag']})
-                if (value == '' || (tags.findIndex(tag => tag.title.toLowerCase() == value.toLowerCase()) > -1)) {
+                themes =  await miro.board.get({type:['frame']})
+                if (value == '' || (themes.findIndex(theme => theme.title.toLowerCase() == value.toLowerCase()) > -1)) {
                     $('.status-text').hide();
                     $('.form-group').addClass('error');
                     $('.duplicate-error').show();
@@ -75,14 +68,14 @@
                 //         miro.board.ui.closeModal();
                 //     });
 
-                await miro.board.setAppData('focusedTagName', value)
+                await miro.board.setAppData('focusedThemeName', value)
                 $("#btn_group").hide()
                 $("#check_group").show()
                 // miro.board.ui.closeModal();
                     
             }
             async function cancel() {
-                miro.board.setAppData('focusedTagName', null)
+                miro.board.setAppData('focusedThemeName', null)
                 .then(() => {
                     miro.board.ui.closeModal();
                 });

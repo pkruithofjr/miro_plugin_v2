@@ -40,7 +40,7 @@ function loadTabTheme() {
     getThemes().then((themes) => {
         $("#themeList").html('')
         if(themes && themes.length) {
-                genList(theme)
+            genList(themes)
         }
         toggleLoading(false)
     })
@@ -58,14 +58,28 @@ $('#addTheme').on('click', async () => {
     var stickies = await getStickies();
     var tags = await getTags();
     var themes = await getThemes();
-
+    var viewport = await miro.board.viewport.get()
     miro.board.ui.openModal({
         url: 'setThemeNameModal.html',
         width: 400,
         height: 250,
         fullscreen: false,
     }).then(() => {
-
+        miro.board.getAppData("focused").then(async (metadata) => {
+            if (metadata) {
+                const frame = await miro.board.createFrame({
+                    title: metadata,
+                    style: {
+                      fillColor: '#FFFFFF',
+                    },
+                    width: 800,
+                    height: 450,
+                    x: viewport.x + x + viewport.width / 2,
+                    y: viewport.y + y + viewport.height / 2,
+                });
+                await miro.board.viewport.zoomTo(frame)
+            }
+        })
     })
 
     toggleLoading(false);
