@@ -81,8 +81,8 @@ async function genList(themes) {
 
     for (theme of themeList) {
         var themeEle = themeItem({
-            showName: theme.title,
-            word: theme.title,
+            showName: theme.name,
+            word: theme.name,
             wordName: null,
             count: null,
             type:'word'
