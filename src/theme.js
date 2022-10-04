@@ -14,7 +14,6 @@ function addThemeList(theme) {
 }
 
 async function genList(themes) {
-    var wordCount = []
     var stopList = analyzeStopList();
     var themeList = []
     for(i=0; i<themes.length; i++) {
@@ -22,7 +21,7 @@ async function genList(themes) {
         themeinfo['name'] = themes[i].title
         themeinfo['id'] = themes[i].id
         themeinfo['childrenIds'] = themes[i].childrenIds
-        wordCount = {}
+        var wordCount = {}
         const children = await themes[i].getChildren()
         for(j=0; j<children.length; j++) {
             var text = stripHtml(children[j].content)
@@ -34,7 +33,7 @@ async function genList(themes) {
                 // Get word count in this widget
                 if (stopList.indexOf(word) == -1) {
                     var tword = word
-                    if(wordCount[tword]) {
+                    if(wordCount[tword] >= 0) {
                         console.log("duplicate")
                         wordCount[tword] = wordCount[tword] + 1
                     } else {
