@@ -16,7 +16,13 @@ function addThemeList(theme) {
 async function genList(themes) {
     var wordCount = []
     var stopList = analyzeStopList();
+    var themeList = []
     for(i=0; i<themes.length; i++) {
+        var themeinfo = {}
+        themeinfo['name'] = themes[i].title
+        themeinfo['id'] = themes[i].id
+        themeinfo['childrenIds'] = themes[i].childrenIds
+        wordCount = []
         const children = await themes[i].getChildren()
         for(j=0; j<children.length; j++) {
             var text = stripHtml(children[j].content)
@@ -32,8 +38,10 @@ async function genList(themes) {
                 }
             }
         }
+        themeinfo.words = wordCount
+        themeList.push(themeinfo)
     }
-    console.log(wordCount)
+    console.log(themeList)
 }
 
 function loadTabTheme() {
