@@ -33,11 +33,12 @@ async function genList(themes) {
             for (word of words) {
                 // Get word count in this widget
                 if (stopList.indexOf(word) == -1) {
-                    if(wordCount[word]) {
+                    var tword = '!--!'+word
+                    if(wordCount[tword]) {
                         console.log("duplicate")
-                        wordCount[word] = wordCount[word] + 1
+                        wordCount[tword] = wordCount[tword] + 1
                     } else {
-                        wordCount[word] = 0
+                        wordCount[tword] = 0
                     }
                 }
             }
