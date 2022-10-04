@@ -87,7 +87,7 @@ async function genList(themes) {
             count: null,
             type:'word'
         })
-        var themeWrapper = $('<ul></ul>');
+        var wordWrapper = $('<ul></ul>');
         var words = Object.keys(theme.words)
         for(word of words) {
             var wordEle = themeItem({
@@ -99,9 +99,10 @@ async function genList(themes) {
                 type:'tag'
             },
             false)
-            themeWrapper.append(wordEle)
+            wordWrapper.append(wordEle)
         }
-        $('#themeList').append(themeWrapper)
+        themeEle.append(wordWrapper)
+        $('#themeList').append(themeEle)
         $('#themeList').metisMenu('dispose');
         $('#themeList').metisMenu();
     }
