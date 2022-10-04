@@ -13,6 +13,37 @@ function addThemeList(theme) {
     `);
 }
 
+function themeItem(data, shorten = false, expandable = true) {
+    var id = randomId()
+
+    return $(`
+    <li class="menu-item-${data.type}" title="${capitalizeFirstLetter(data.showName) + ' (' + data.count + ')'}" id="${id}">
+        <a href="#" ${expandable ? 'class="has-arrow" aria-expanded="false"' : ''} onClick='selectWidgets(${JSON.stringify(data)})'>
+            <span class="word-name">${data.showName}</span> &nbsp;
+            <span class="item-badge">(${data.count})</span>
+        </a>
+        <div class="action">
+            ${
+                !shorten
+                    ? `<button class="btn button-icon button-icon-small icon-tile" title="Cluster" onClick='clusterItemsFromData(${JSON.stringify(data)})'></button>
+                        <button class="btn button-icon button-icon-small icon-pin" title="Add a Tag" onClick='addTagSelectedItem(${JSON.stringify(data)})'></button>
+                        <button class="btn button-icon button-icon-small icon-duplicate" title="Duplicate" onClick='duplicateSelection(${JSON.stringify(data)})'></button>
+                        <button class="btn button-icon button-icon-small icon-more" onClick="moreButtonClicked(this)" title="More"></button>`
+                    : `<button class="btn button-icon button-icon-small icon-tile" title="Cluster" onClick='clusterItemsFromData(${JSON.stringify(data)})'></button>
+                        <button class="btn button-icon button-icon-small icon-pin" title="Add a Tag" onClick='addTagSelectedItem(${JSON.stringify(data)})'></button>
+                        <button class="btn button-icon button-icon-small icon-more" onClick="moreButtonClicked(this)" title="More"></button>`
+            }
+            ${
+                !shorten
+                    ? `<ul class="more-dropmenu"> <li> <button class="btn button-icon button-icon-small icon-deactivated" title="Add to stop list" onClick='addToStopList(this, "${data.word}")'> Add to stop list</button> </li> </ul>`
+                    : `<ul class="more-dropmenu"> 
+                        <li><button class="btn button-icon button-icon-small icon-duplicate" title="Duplicate" onClick='duplicateSelection(${JSON.stringify(data)})'>Duplicate</button></li>
+                        <li> <button class="btn button-icon button-icon-small icon-deactivated" title="Add to stop list" onClick='addToStopList(this, "${data.word}")'>Add to stop list</button> </li> </ul>`
+            }
+        </div>
+    </li>`)
+}
+
 async function genList(themes) {
     var stopList = analyzeStopList();
     var themeList = []
@@ -44,6 +75,35 @@ async function genList(themes) {
         }
         themeinfo.words = wordCount
         themeList.push(themeinfo)
+    }
+    
+    $('#themeList').html('');
+
+    for (theme of themeList) {
+        var themeEle = themeItem({
+            showName: theme.title,
+            word: theme.title,
+            wordName: null,
+            count: null,
+            type:'word'
+        })
+        var themeWrapper = $('<ul></ul>');
+        var words = Object.keys(theme.words)
+        for(word of words) {
+            var wordEle = themeItem({
+                showName: word,
+                word: word,
+                tagName: null,
+                stickyId: null,
+                count: theme.words[word],
+                type:'tag'
+            },
+            false)
+            themeWrapper.append(wordEle)
+        }
+        $('#themeList').append(themeWrapper)
+        $('#themeList').metisMenu('dispose');
+        $('#themeList').metisMenu();
     }
     console.log(themeList)
 }
