@@ -33,8 +33,12 @@ async function genList(themes) {
             for (word of words) {
                 // Get word count in this widget
                 if (stopList.indexOf(word) == -1) {
-                    if(wordCount[word]) wordCount[word] ++
-                    else wordCount[word] = 0
+                    if(wordCount[word]) {
+                        console.log("duplicate")
+                        wordCount[word] = wordCount[word] + 1
+                    } else {
+                        wordCount[word] = 0
+                    }
                 }
             }
         }
