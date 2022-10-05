@@ -18,9 +18,9 @@ function themeItem(data, shorten = false, expandable = true) {
 
     return $(`
     <li class="menu-item-${data.type}" title="${capitalizeFirstLetter(data.showName) + ' (' + data.count + ')'}" id="${id}">
-        <a href="#" ${expandable ? 'class="has-arrow" aria-expanded="false"' : ''} onClick='selectWidgets(${JSON.stringify(data)})'>
+        <a href="#" ${expandable ? 'class="has-arrow" aria-expanded="false"' : ''} onClick='selectTheme(${JSON.stringify(data)})'>
             <span class="word-name">${data.showName}</span> &nbsp;
-            <span class="item-badge">(${data.count})</span>
+            <span class="item-badge">(${data.count==null? '' : data.count})</span>
         </a>
         <div class="action">
             ${
@@ -44,6 +44,9 @@ function themeItem(data, shorten = false, expandable = true) {
     </li>`)
 }
 
+async function selectTheme(data) {
+    await miro.board.zoomTo(data.themeId)
+}
 
 async function genList(themes) {
     var stopList = analyzeStopList();
@@ -65,11 +68,11 @@ async function genList(themes) {
                 // Get word count in this widget
                 if (stopList.indexOf(word) == -1) {
                     var tword = word
-                    if(wordCount[tword] >= 0) {
+                    if(wordCount[tword] >= 1) {
                         console.log("duplicate")
                         wordCount[tword] = wordCount[tword] + 1
                     } else {
-                        wordCount[tword] = 0
+                        wordCount[tword] = 1
                     }
                 }
             }
@@ -83,6 +86,7 @@ async function genList(themes) {
     for (theme of themeList) {
         var themeEle = themeItem({
             showName: theme.name,
+            themeId: theme.id,
             word: theme.name,
             wordName: null,
             count: null,
