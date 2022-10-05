@@ -25,13 +25,15 @@ function themeItem(data, shorten = false, expandable = true) {
         <div class="action">
             ${
                 !shorten
-                    ? `<button class="btn button-icon button-icon-small icon-tile" title="Cluster" onClick='clusterItemsFromData(${JSON.stringify(data)})'></button>
-                        <button class="btn button-icon button-icon-small icon-pin" title="Add a Tag" onClick='addTagSelectedItem(${JSON.stringify(data)})'></button>
-                        <button class="btn button-icon button-icon-small icon-duplicate" title="Duplicate" onClick='duplicateSelection(${JSON.stringify(data)})'></button>
+                    ? `<button class="btn button-icon button-icon-small icon-visibility" title="Cluster" onClick='clusterItemsFromData(${JSON.stringify(data)})'></button>
+                        <button class="btn button-icon button-icon-small icon-add" title="Add a Tag" onClick='addTagSelectedItem(${JSON.stringify(data)})'></button>
+                        <button class="btn button-icon button-icon-small icon-tile" title="Duplicate" onClick='duplicateSelection(${JSON.stringify(data)})'></button>
+                        <button class="btn button-icon button-icon-small icon-delete" title="Duplicate" onClick='duplicateSelection(${JSON.stringify(data)})'></button>
                         <button class="btn button-icon button-icon-small icon-more" onClick="moreButtonClicked(this)" title="More"></button>`
-                    : `<button class="btn button-icon button-icon-small icon-tile" title="Cluster" onClick='clusterItemsFromData(${JSON.stringify(data)})'></button>
-                        <button class="btn button-icon button-icon-small icon-pin" title="Add a Tag" onClick='addTagSelectedItem(${JSON.stringify(data)})'></button>
-                        <button class="btn button-icon button-icon-small icon-more" onClick="moreButtonClicked(this)" title="More"></button>`
+                    : `<button class="btn button-icon button-icon-small icon-visibility" title="Cluster" onClick='clusterItemsFromData(${JSON.stringify(data)})'></button>
+                    <button class="btn button-icon button-icon-small icon-add" title="Add a Tag" onClick='addTagSelectedItem(${JSON.stringify(data)})'></button>
+                    <button class="btn button-icon button-icon-small icon-tile" title="Duplicate" onClick='duplicateSelection(${JSON.stringify(data)})'></button>
+                    <button class="btn button-icon button-icon-small icon-delete" title="Duplicate" onClick='duplicateSelection(${JSON.stringify(data)})'></button>`
             }
             ${
                 !shorten
@@ -98,7 +100,7 @@ async function genList(themes) {
                 count: theme.words[word],
                 type:'tag'
             },
-            false)
+            true)
             wordWrapper.append(wordEle)
         }
         themeEle.append(wordWrapper)
