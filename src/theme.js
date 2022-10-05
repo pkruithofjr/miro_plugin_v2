@@ -25,15 +25,13 @@ function themeItem(data, shorten = false, expandable = true) {
         <div class="action">
             ${
                 !shorten
-                    ? `<button class="btn button-icon button-icon-small icon-visibility" title="Cluster" onClick='clusterItemsFromData(${JSON.stringify(data)})'>visibility</button>
-                        <button class="btn button-icon button-icon-small icon-add" title="Add a Tag" onClick='addTagSelectedItem(${JSON.stringify(data)})'>add</button>
-                        <button class="btn button-icon button-icon-small icon-tile" title="Duplicate" onClick='duplicateSelection(${JSON.stringify(data)})'></button>
-                        <button class="btn button-icon button-icon-small icon-delete" title="Duplicate" onClick='duplicateSelection(${JSON.stringify(data)})'>delete</button>
+                    ? `<button class="btn button-icon button-icon-small icon-eye" title="View" onClick='moveToTheme(${JSON.stringify(data)})'></button>
+                        <button class="btn button-icon button-icon-small icon-plus" title="Add Stickies" onClick='addNoteToTheme(${JSON.stringify(data)})'></button>
+                        <button class="btn button-icon button-icon-small icon-tile" title="Cluster" onClick='clusterTheme(${JSON.stringify(data)})'></button>
+                        <button class="btn button-icon button-icon-small icon-trash" title="Delete" onClick='deleteTheme(${JSON.stringify(data)})'></button>
                         <button class="btn button-icon button-icon-small icon-more" onClick="moreButtonClicked(this)" title="More"></button>`
-                    : `<button class="btn button-icon button-icon-small icon-visibility" title="Cluster" onClick='clusterItemsFromData(${JSON.stringify(data)})'></button>
-                    <button class="btn button-icon button-icon-small icon-add" title="Add a Tag" onClick='addTagSelectedItem(${JSON.stringify(data)})'></button>
-                    <button class="btn button-icon button-icon-small icon-tile" title="Duplicate" onClick='duplicateSelection(${JSON.stringify(data)})'></button>
-                    <button class="btn button-icon button-icon-small icon-delete" title="Duplicate" onClick='duplicateSelection(${JSON.stringify(data)})'></button>`
+                    : `<button class="btn button-icon button-icon-small icon-tile" title="Delete" onClick='deleteSticky(${JSON.stringify(data)})'></button>
+                        `
             }
             ${
                 !shorten
@@ -45,6 +43,7 @@ function themeItem(data, shorten = false, expandable = true) {
         </div>
     </li>`)
 }
+
 
 async function genList(themes) {
     var stopList = analyzeStopList();
