@@ -18,14 +18,14 @@ function themeItem(data, shorten = false, expandable = true) {
 
     return $(`
     <li class="menu-item-${data.type}" title="${capitalizeFirstLetter(data.showName) + ' (' + data.count + ')'}" id="${id}">
-        <a href="#" ${expandable ? 'class="has-arrow" aria-expanded="false"' : ''} onClick='selectTheme(${JSON.stringify(data)})'>
+        <a href="#" ${expandable ? 'class="has-arrow" aria-expanded="false"' : ''}>
             <span class="word-name">${data.showName}</span> &nbsp;
-            <span class="item-badge">(${data.count==null? '' : data.count})</span>
+            <span class="item-badge">${data.count==null? '' : '('+data.count+')'}</span>
         </a>
         <div class="action">
             ${
                 !shorten
-                    ? `<button class="btn button-icon button-icon-small icon-eye" title="View" onClick='moveToTheme(${JSON.stringify(data)})'></button>
+                    ? `<button class="btn button-icon button-icon-small icon-eye" title="View" onClick='selectTheme(${JSON.stringify(data)})'></button>
                         <button class="btn button-icon button-icon-small icon-plus" title="Add Stickies" onClick='addNoteToTheme(${JSON.stringify(data)})'></button>
                         <button class="btn button-icon button-icon-small icon-tile" title="Cluster" onClick='clusterTheme(${JSON.stringify(data)})'></button>
                         <button class="btn button-icon button-icon-small icon-trash" title="Delete" onClick='deleteTheme(${JSON.stringify(data)})'></button>
@@ -45,7 +45,7 @@ function themeItem(data, shorten = false, expandable = true) {
 }
 
 async function selectTheme(data) {
-    await miro.board.zoomTo(data.themeId)
+    await miro.board.viewport.zoomTo(data.themeId)
 }
 
 async function genList(themes) {
