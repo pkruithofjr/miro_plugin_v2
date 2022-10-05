@@ -45,7 +45,7 @@ function themeItem(data, shorten = false, expandable = true) {
 }
 
 async function selectTheme(data) {
-    await miro.board.viewport.zoomTo(data.themeId)
+    await miro.board.viewport.zoomTo(data.theme)
 }
 
 async function genList(themes) {
@@ -86,7 +86,7 @@ async function genList(themes) {
     for (theme of themeList) {
         var themeEle = themeItem({
             showName: theme.name,
-            themeId: theme.id,
+            theme: theme,
             word: theme.name,
             wordName: null,
             count: null,
