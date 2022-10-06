@@ -15,6 +15,8 @@ function loadTabNotes() {
     })
 }
 
-$(".tag-button").onclick(function() {
-    this.classList.add('selected')
+document.querySelectorAll('.tag-button').forEach((button) => {
+    button.onclick = function() {
+        this.classList.add('selected')
+    }
 })
