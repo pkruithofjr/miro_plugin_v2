@@ -11,9 +11,10 @@ function loadTabNotes() {
                     </button>
                 </div>`)
         })
+        toggleLoading(false);
     })
 }
 
-$(".tag-button").click(function() {
+$(".tag-button").onclick(function() {
     this.classList.add('selected')
 })

@@ -214,7 +214,7 @@ select {
 .tag-button {
     opacity: 70%;
 }
-.tag-button .selected {
+.tag-button.selected {
     opacity: 100%;
 }
 .stat-list .button-icon:hover {
