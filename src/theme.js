@@ -50,13 +50,15 @@ async function selectTheme(data) {
 
 async function addNoteToTheme(data) {
     var selectedStickies = await miro.board.getSelection();
+    const currentTheme = await miro.board.getById(data.theme.id)
     for(selectedsticky of selectedStickies) {
-        await data.theme.add(selectedsticky)
+        await currentTheme.add(selectedsticky)
     }
 }
 
 async function duplicateTheme(data) {
-    var childrens = await data.theme.getChildren()
+    var currentTheme = await miro.board.getById(data.theme.id)
+    var childrens = await currentTheme.getChildren()
     console.log(childrens)
 }
 
