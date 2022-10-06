@@ -54,6 +54,7 @@ async function addNoteToTheme(data) {
     for(selectedsticky of selectedStickies) {
         selectedsticky.x = currentTheme.x + 20
         selectedsticky.y = currentTheme.y + 20
+        await selectedsticky.sync()
         await currentTheme.add(selectedsticky)
     }
 }
