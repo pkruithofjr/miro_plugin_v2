@@ -48,6 +48,13 @@ async function selectTheme(data) {
     await miro.board.viewport.zoomTo(data.theme)
 }
 
+async function addNoteToTheme(data) {
+    var selectedStickies = await miro.board.getSelection();
+    for(selectedsticky of selectedStickies) {
+        await data.theme.add(selectedsticky)
+    }
+}
+
 async function genList(themes) {
     var stopList = analyzeStopList();
     var themeList = []
