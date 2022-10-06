@@ -5,10 +5,10 @@ function loadTabNotes() {
         tags.forEach((tag) => {
             $("#tagViewList").append(
                 `<div class="cs1 ce12 placeholder">
-                    <button class="button button-secondary tag-button" style="background-color:${tag.color};">
-                        <span class="icon-tag"></span>
+                    <button class="button button-secondary tag-button button-small" style="margin-bottom:0px;background-color:${tag.color};">
                         ${tag.title}
-                    <button>
+                        <span class="icon-edit" style="opacity:70%;"></span>
+                    </button>
                 </div>`)
         })
     })
