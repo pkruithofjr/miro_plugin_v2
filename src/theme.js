@@ -52,10 +52,15 @@ async function addNoteToTheme(data) {
     var selectedStickies = await miro.board.getSelection();
     const currentTheme = await miro.board.getById(data.theme.id)
     for(selectedsticky of selectedStickies) {
-        selectedsticky.x = currentTheme.x + 20
-        selectedsticky.y = currentTheme.y + 20
-        await selectedsticky.sync()
-        await currentTheme.add(selectedsticky)
+        const note = await miro.board.createStickyNote({
+            content: selectedsticky.content,
+            style: selectedsticky.style,
+            shape: 'square',
+            parentId: null,
+            tagIds: selectedsticky.tagIds,
+            width: selectedsticky.width
+        })
+        await currentTheme.add(note)
     }
 }
 
