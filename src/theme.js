@@ -68,6 +68,7 @@ async function addNoteToTheme(data) {
 async function duplicateTheme(data) {
     var currentTheme = await miro.board.getById(data.theme.id)
     var childrens = await currentTheme.getChildren()
+    var viewport = await miro.board.viewport.get()
     const frame = await miro.board.createFrame({
         title: currentTheme.title+' - Copy',
         style: {
