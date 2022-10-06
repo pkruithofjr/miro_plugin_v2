@@ -57,7 +57,9 @@ async function addNoteToTheme(data) {
             style: selectedsticky.style,
             shape: 'square',
             tagIds: selectedsticky.tagIds,
-            width: selectedsticky.width
+            width: selectedsticky.width,
+            x: currentTheme.x,
+            y: currentTheme.y
         })
         await currentTheme.add(note)
     }
