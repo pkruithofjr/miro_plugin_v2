@@ -24,3 +24,20 @@ function loadTabNotes() {
     })
 }
 
+$("#addSticky").click(async function() {
+    var tags = document.querySelectorAll('.tag-button')
+    var tagIds = []
+    for(tag of tags) {
+        if(tag.classList.length == 5) {
+            tagIds.push(tag.getAttribute('tag-id'))
+        }
+    }
+    var viewport = await miro.board.viewport.get()
+    const note = await miro.board.createStickyNote({
+        content: $("#noteContent").val(),
+        shape: 'square',
+        x: viewport.x + viewport.width / 2,
+        y: viewport.y + viewport.height / 2,
+        tagIds: tagIds
+    })
+})

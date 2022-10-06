@@ -213,6 +213,9 @@ select {
 }
 .tag-button {
     opacity: 70%;
+    margin-bottom: 3px !important;
+    margin-right: 5px !important;
+    padding-right: 10px;
 }
 .tag-button.selected {
     opacity: 100%;
