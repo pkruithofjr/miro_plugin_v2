@@ -68,6 +68,30 @@ async function addNoteToTheme(data) {
 async function duplicateTheme(data) {
     var currentTheme = await miro.board.getById(data.theme.id)
     var childrens = await currentTheme.getChildren()
+    const frame = await miro.board.createFrame({
+        title: currentTheme.title+' - Copy',
+        style: {
+          fillColor: '#FFFFFF',
+        },
+        width: currentTheme.width,
+        height: currentTheme.height,
+        x: viewport.x + viewport.width / 2,
+        y: viewport.y + viewport.height / 2,
+    });
+    await miro.board.viewport.zoomTo(frame)
+    for(children of childrens) {
+        const note = await miro.board.createStickyNote({
+            content: children.content,
+            style: children.style,
+            shape: 'square',
+            tagIds: children.tagIds,
+            width: children.width,
+            x: children.x,
+            y: children.y
+        })
+        await frame.add(note)
+    }
+    await frame.sync();
     console.log(childrens)
 }
 
