@@ -211,6 +211,9 @@ select {
     height: 24px;
     padding: 0;
 }
+.tag-button .selected {
+    opacity: 100%;
+}
 .stat-list .button-icon:hover {
     background-color: white;
 }
