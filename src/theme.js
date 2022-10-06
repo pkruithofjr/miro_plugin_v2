@@ -27,7 +27,7 @@ function themeItem(data, shorten = false, expandable = true) {
                 !shorten
                     ? `<button class="btn button-icon button-icon-small icon-eye" title="View" onClick='selectTheme(${JSON.stringify(data)})'></button>
                         <button class="btn button-icon button-icon-small icon-plus" title="Add Stickies" onClick='addNoteToTheme(${JSON.stringify(data)})'></button>
-                        <button class="btn button-icon button-icon-small icon-tile" title="Cluster" onClick='clusterTheme(${JSON.stringify(data)})'></button>
+                        <button class="btn button-icon button-icon-small icon- icon-duplicate" title="Duplicate" onClick='duplicateTheme(${JSON.stringify(data)})'></button>
                         <button class="btn button-icon button-icon-small icon-trash" title="Delete" onClick='deleteTheme(${JSON.stringify(data)})'></button>
                         <button class="btn button-icon button-icon-small icon-more" onClick="moreButtonClicked(this)" title="More"></button>`
                     : `<button class="btn button-icon button-icon-small icon-tile" title="Delete" onClick='deleteSticky(${JSON.stringify(data)})'></button>
@@ -53,6 +53,11 @@ async function addNoteToTheme(data) {
     for(selectedsticky of selectedStickies) {
         await data.theme.add(selectedsticky)
     }
+}
+
+async function duplicateTheme(data) {
+    var childrens = await data.theme.getChildren()
+    console.log(childrens)
 }
 
 async function genList(themes) {
