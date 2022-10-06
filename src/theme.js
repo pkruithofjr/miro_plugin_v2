@@ -49,54 +49,13 @@ async function selectTheme(data) {
 }
 
 async function addNoteToTheme(data) {
-    // var selectedStickies = await miro.board.getSelection();
-    // const currentTheme = await miro.board.getById(data.theme.id)
-    // for(selectedsticky of selectedStickies) {
-    //     await currentTheme.add(selectedsticky)
-    // }
-    const frame = await miro.board.createFrame({
-        title: 'this frame ratio is 16:9',
-        style: {
-          fillColor: '#FFFFFF',
-        },
-        width: 800,
-        height: 450,
-        x: 4100,
-        y: 4200,
-      });
-      
-      // Create a text item, and position it inside the frame.
-      const text = await miro.board.createText({
-        content: 'this is a piece of text',
-        style: {
-          fillColor: '#fff9b1', // Light yellow
-        },
-        x: frame.x + 180,
-        y: frame.y + 10,
-      });
-      
-      // Create a shape item, and position it inside the frame.
-      const shape = await miro.board.createShape({
-        width: 200,
-        height: 250,
-        x: frame.x + 20,
-        y: frame.y + 50,
-        style: {
-          fillColor: '#FF0000',
-        },
-      });
-      
-      // Add the text and the shape items as children of the parent frame.
-      await frame.add(text);
-      await frame.add(shape);
-      
-      // Move the frame on the board.
-      // The children items move along with the frame:
-      // their coordinates are relative to the top-left corner of the frame.
-      frame.x = -400;
-      frame.y = -500;
-      await frame.sync();
-      
+    var selectedStickies = await miro.board.getSelection();
+    const currentTheme = await miro.board.getById(data.theme.id)
+    for(selectedsticky of selectedStickies) {
+        selectedsticky.x = currentTheme.x + 20
+        selectedsticky.y = currentTheme.y + 20
+        await currentTheme.add(selectedsticky)
+    }
 }
 
 async function duplicateTheme(data) {
