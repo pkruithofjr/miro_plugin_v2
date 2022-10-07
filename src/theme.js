@@ -48,6 +48,11 @@ async function selectTheme(data) {
     await miro.board.viewport.zoomTo(data.theme)
 }
 
+async function deleteTheme(data) {
+    const currentTheme = await miro.board.getById(data.theme.id)
+    await miro.board.remove(currentTheme);
+}
+
 async function addNoteToTheme(data) {
     var selectedStickies = await miro.board.getSelection();
     const currentTheme = await miro.board.getById(data.theme.id)

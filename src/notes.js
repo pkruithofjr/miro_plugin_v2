@@ -41,3 +41,10 @@ $("#addSticky").click(async function() {
         tagIds: tagIds
     })
 })
+
+document.getElementById('noteContent').addEventListener('keypress', function(event) {
+    if(event.key === 'Enter') {
+        event.preventDefault()
+        document.getElementById('addSticky').click()
+    }
+})
