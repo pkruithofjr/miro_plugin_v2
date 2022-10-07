@@ -28,8 +28,7 @@ function themeItem(data, shorten = false, expandable = true) {
                     ? `<button class="btn button-icon button-icon-small icon-eye" title="View" onClick='selectTheme(${JSON.stringify(data)})'></button>
                         <button class="btn button-icon button-icon-small icon-plus" title="Add Stickies" onClick='addNoteToTheme(${JSON.stringify(data)})'></button>
                         <button class="btn button-icon button-icon-small icon- icon-duplicate" title="Duplicate" onClick='duplicateTheme(${JSON.stringify(data)})'></button>
-                        <button class="btn button-icon button-icon-small icon-trash" title="Delete" onClick='deleteTheme(${JSON.stringify(data)})'></button>
-                        <button class="btn button-icon button-icon-small icon-more" onClick="moreButtonClicked(this)" title="More"></button>`
+                        <button class="btn button-icon button-icon-small icon-trash" title="Delete" onClick='deleteTheme(${JSON.stringify(data)})'></button>`
                     : `<button class="btn button-icon button-icon-small icon-tile" title="Delete" onClick='deleteSticky(${JSON.stringify(data)})'></button>
                         `
             }
@@ -50,6 +49,10 @@ async function selectTheme(data) {
 
 async function deleteTheme(data) {
     const currentTheme = await miro.board.getById(data.theme.id)
+    var childrens = await currentTheme.getChildren()
+    for (children of childrens) {
+        await miro.board.remove(children)
+    }
     await miro.board.remove(currentTheme);
 }
 
@@ -63,8 +66,8 @@ async function addNoteToTheme(data) {
             shape: 'square',
             tagIds: selectedsticky.tagIds,
             width: selectedsticky.width,
-            x: currentTheme.x,
-            y: currentTheme.y
+            x: currentTheme.x - 800,
+            y: currentTheme.y - 800
         })
         await currentTheme.add(note)
     }
