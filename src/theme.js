@@ -76,7 +76,7 @@ async function clusteringTheme(data) {
     var color = randomNoteColor()
     for(i=0; i<count; i++) {
         var currentNote = await miro.board.getById(data.wordList[i])
-        currentNote.color = color
+        currentNote.style.fillColor = color 
         currentNote.width = 200
         currentNote.x = init_x + (i % note_x) * 200 + (i % note_x) * 20
         currentNote.y = init_y + (i / note_y) * 200 + (i / note_y) * 20
