@@ -70,7 +70,7 @@ async function clusteringTheme(data) {
         currentTheme.height = total_y + 400
         await currentTheme.sync()
     }
-    var init_x = 120, init_y = 120
+    var init_x = 120 + Math.random() * (currentTheme.width - total_x) - 200, init_y = 120 + Math.random() * (currentTheme.height - total_y) - 200
     // init_x = Math.random() * (currentTheme.width - total_x) - currentTheme.width / 2
     // init_y = Math.random() * (currentTheme.height - total_y) - currentTheme.height / 2
 
@@ -79,8 +79,8 @@ async function clusteringTheme(data) {
         var currentNote = await miro.board.getById(data.wordList[i])
         currentNote.style.fillColor = color 
         currentNote.width = 200
-        currentNote.x = init_x + (i % note_x) * 200 + (i % note_x) * 20
-        currentNote.y = init_y + (i / note_y) * 200 + (i / note_y) * 20
+        currentNote.x = init_x + (i / note_x) * 200 + (i / note_x) * 20
+        currentNote.y = init_y + (i % note_y) * 250 + (i % note_y) * 20
         currentNote.sync()
     }
 }
