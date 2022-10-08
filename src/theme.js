@@ -29,7 +29,7 @@ function themeItem(data, shorten = false, expandable = true) {
                         <button class="btn button-icon button-icon-small icon-plus" title="Add Stickies" onClick='addNoteToTheme(${JSON.stringify(data)})'></button>
                         <button class="btn button-icon button-icon-small icon- icon-duplicate" title="Duplicate" onClick='duplicateTheme(${JSON.stringify(data)})'></button>
                         <button class="btn button-icon button-icon-small icon-trash" title="Delete" onClick='deleteTheme(${JSON.stringify(data)})'></button>`
-                    : `<button class="btn button-icon button-icon-small icon-tile" title="Delete" onClick='deleteSticky(${JSON.stringify(data)})'></button>
+                    : `<button class="btn button-icon button-icon-small icon-tile" title="Delete" onClick='clusteringTheme(${JSON.stringify(data)})'></button>
                         `
             }
             ${
@@ -54,6 +54,34 @@ async function deleteTheme(data) {
         await miro.board.remove(children)
     }
     await miro.board.remove(currentTheme);
+}
+
+async function clusteringTheme(data) {
+    var count = data.wordList.length
+    var note_x = Math.sqrt(count).toFixed(0)*1
+    var note_y
+    if (note_x * note_x <= count) note_y = note_x
+    else note_y = note_x + 1
+    var total_x = 200 * note_x + 20 * (note_x - 1)
+    var total_y = 200 * note_y + 20 * (note_y - 1)
+    const currentTheme = await miro.board.getById(data.theme.id)
+    if(currentTheme.width < total_x || currentTheme.height < total_y) {
+        currentTheme.width = total_x + 400
+        currentTheme.height = total_y + 400
+        currentTheme.sync()
+    }
+    var init_x, init_y
+    init_x = Math.random() * (currentTheme.width - total_x) - currentTheme.width / 2
+    init_y = Math.random() * (currentTheme.height - total_y) - currentTheme.height / 2
+    var color = randomNoteColor()
+    for(i=0; i<count; i++) {
+        var currentNote = await miro.board.getById(data.wordList[i])
+        currentNote.color = color
+        currentNote.width = 200
+        currentNote.x = init_x + (i % note_x) * 200 + (i % note_x) * 20
+        currentNote.y = init_y + (i / note_y) * 200 + (i / note_y) * 20
+        currentNote.sync()
+    }
 }
 
 async function addNoteToTheme(data) {
