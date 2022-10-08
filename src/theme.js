@@ -126,7 +126,7 @@ async function genList(themes) {
                 // Get word count in this widget
                 if (stopList.indexOf(word) == -1) {
                     var tword = word
-                    if(wordCount[tword].length != undefined) {
+                    if(wordCount[tword] == []) {
                         console.log("duplicate")
                         wordCount[tword].push(children.id)
                     } else {
