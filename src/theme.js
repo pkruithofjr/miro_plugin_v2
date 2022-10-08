@@ -183,6 +183,7 @@ async function genList(themes) {
         for(word of words) {
             var wordEle = themeItem({
                 showName: word,
+                theme: theme,
                 word: word,
                 tagName: null,
                 stickyId: null,
