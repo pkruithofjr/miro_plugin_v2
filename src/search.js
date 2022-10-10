@@ -116,6 +116,7 @@ $('#createTagApply').on('click', async function () {
 async function deleteTag(tagId) {
     var currentTag = await miro.board.getById(tagId)
     await miro.board.remove(currentTag)
+    $("#"+tagId).remove()
 }
 
 async function addTagToSelectedStickies(tagId) {
