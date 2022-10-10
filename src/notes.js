@@ -1,13 +1,27 @@
 function loadTabNotes() {
     toggleLoading(true);
+    var colors = {
+        red: "#f24726",
+        magenta: "#da0063",
+        violet: "	#9510ac",
+        light_green: "#cee741",
+        green: "#8fd14f",
+        dark_green: "#0ca789",
+        cyan: "#12cdd4",
+        blue: "#2d9bf0",
+        dark_blue: "#414bb2",
+        yellow: "#fac710",
+        gray: "#808080",
+        black:"#1a1a1a"
+    }
     $("#tagViewList").empty()
     getTags().then((tags) => {
         tags.forEach((tag) => {
             $("#tagViewList").append(
                 `
-                    <div class="tag-edit-div button-primary tag-button button-small" style="font-weight:700;color:white;margin-bottom:0px;" tag-id="${tag.id}">
+                    <div class="tag-edit-div button-primary tag-button button-small" style="font-weight:700;color:white;margin-bottom:0px;background-color:${colors[tag.color]};" tag-id="${tag.id}">
                         ${tag.title}
-                        <button class="icon-edit" style="opacity:40%;width: 24px;height: 24px;background-color: #00000000;border-color: #00000000;" onclick="editTagDetail(${tag.id})"></button>
+                        <button class="icon-edit" style="opacity:40%;width: 24px;height: 24px;background-color: #00000000;border-color: #00000000;" onclick="editTagDetail('${tag.id}')"></button>
                     </div>
                 `)
         })
@@ -60,6 +74,8 @@ $("#addSticky").click(async function() {
             y: viewport.y + viewport.height / 2,
             tagIds: tagIds
         })
+        $("#noteContent").val("")
+        $("#noteContent").focus()
     }
 })
 

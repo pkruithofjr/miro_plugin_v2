@@ -104,13 +104,14 @@ select {
 
 .tag-edit-div {
     width: auto;
+    user-select: none;
     cursor: pointer;
     display: inline-block;
 }
 
 .stat-list .metismenu {
     list-style: none;
-    max-height: calc(100% - 105px);
+    max-height: calc(100% - 150px);
     overflow-y: auto;
     padding: 0;
     -ms-overflow-style: none; /* IE and Edge */
