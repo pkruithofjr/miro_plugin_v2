@@ -5,10 +5,10 @@ function loadTabNotes() {
         tags.forEach((tag) => {
             $("#tagViewList").append(
                 `
-                    <button class="button button-primary tag-button button-small" style="font-weight:700;color:white;margin-bottom:0px;" tag-id="${tag.id}" onclick="SelectButton()">
+                    <div class="button-primary tag-button button-small" style="font-weight:700;color:white;margin-bottom:0px;" tag-id="${tag.id}">
                         ${tag.title}
-                        <span class="icon-edit" style="opacity:40%;"></span>
-                    </button>
+                        <button class="icon-edit" style="opacity:40%;"></span>
+                    </div>
                 `)
         })
         document.querySelectorAll('.tag-button').forEach((button) => {

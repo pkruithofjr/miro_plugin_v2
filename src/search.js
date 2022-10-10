@@ -11,7 +11,7 @@ function loadTagList() {
                     <div class="action">
                         <button class="btn button-icon button-icon-small icon-tile" title="Cluster stickies of this tag" onClick='clusterStickiesOfTag("${tag.id}")'></button>
                         <button class="btn button-icon button-icon-small icon-pin" title="Add a Tag to selection" onClick='addTagToSelectedStickies("${tag.id}")'></button>
-                        <button class="btn button-icon button-icon-small icon-delete" title="Delete a tag" onClick='deleteTag("${tag.id}")'></button>
+                        <button class="btn button-icon button-icon-small icon-trash" title="Delete a tag" onClick='deleteTag("${tag.id}")'></button>
                     </div>
                 </li>`
             );
