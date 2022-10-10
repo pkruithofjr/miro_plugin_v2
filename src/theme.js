@@ -29,7 +29,7 @@ function themeItem(data, shorten = false, expandable = true) {
                         <button class="btn button-icon button-icon-small icon-plus" title="Add Stickies" onClick='addNoteToTheme(${JSON.stringify(data)})'></button>
                         <button class="btn button-icon button-icon-small icon- icon-duplicate" title="Duplicate" onClick='duplicateTheme(${JSON.stringify(data)})'></button>
                         <button class="btn button-icon button-icon-small icon-trash" title="Delete" onClick='deleteTheme(${JSON.stringify(data)})'></button>`
-                    : `<button class="btn button-icon button-icon-small icon-tile" title="Delete" onClick='clusteringTheme(${JSON.stringify(data)})'></button>
+                    : `<button class="btn button-icon button-icon-small icon-tile" title="Cluster stickies of this theme" onClick='clusteringTheme(${JSON.stringify(data)})'></button>
                         `
             }
             ${
@@ -57,6 +57,7 @@ async function deleteTheme(data) {
 }
 
 async function clusteringTheme(data) {
+    console.log(data)
     var count = data.wordList.length
     var note_x = Math.sqrt(count).toFixed(0)*1
     var note_y
@@ -247,7 +248,9 @@ $('#addTheme').on('click', async () => {
                     y: viewport.y + viewport.height / 2,
                 });
                 await miro.board.viewport.zoomTo(frame)
+                loadTabTheme();
             }
+
         })
     })
 
