@@ -5,9 +5,9 @@ function loadTabNotes() {
         tags.forEach((tag) => {
             $("#tagViewList").append(
                 `
-                    <div class="button-primary tag-button button-small" style="font-weight:700;color:white;margin-bottom:0px;" tag-id="${tag.id}">
+                    <div class="tag-edit-div button-primary tag-button button-small" style="font-weight:700;color:white;margin-bottom:0px;" tag-id="${tag.id}">
                         ${tag.title}
-                        <button class="icon-edit" style="opacity:40%;"></span>
+                        <button class="icon-edit" style="opacity:40%;width: 24px;height: 24px;background-color: #00000000;border-color: #00000000;" onclick="editTagDetail(${tag.id})"></button>
                     </div>
                 `)
         })
@@ -21,6 +21,25 @@ function loadTabNotes() {
             }
         })
         toggleLoading(false);
+    })
+}
+
+async function editTagDetail(tagId) {
+    var currentTag = await miro.board.getById(tagId)
+    await miro.board.setAppData('editTagName', currentTag.title)
+    miro.board.ui.openModal({
+        url: 'editTagNameModal.html',
+        width: 400,
+        height: 250,
+        fullscreen: false,
+    }).then(() => {
+        miro.board.getAppData("editTagName").then(async (metadata) => {
+            if (metadata) {
+                currentTag.title = metadata
+                currentTag.sync()
+                loadTabNotes();
+            }
+        })
     })
 }
 

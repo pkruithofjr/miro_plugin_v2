@@ -102,6 +102,12 @@ select {
     margin-bottom: 10px;
 }
 
+.tag-edit-div {
+    width: auto;
+    cursor: pointer;
+    display: inline-block;
+}
+
 .stat-list .metismenu {
     list-style: none;
     max-height: calc(100% - 105px);
