@@ -133,8 +133,8 @@ async function duplicateTheme(data) {
         },
         width: currentTheme.width,
         height: currentTheme.height,
-        x: viewport.x + viewport.width / 2,
-        y: viewport.y + viewport.height / 2,
+        x: currentTheme.x + 3000,
+        y: currentTheme.y,
     });
     await miro.board.viewport.zoomTo(frame)
     for(children of childrens) {
@@ -144,8 +144,8 @@ async function duplicateTheme(data) {
             shape: 'square',
             tagIds: children.tagIds,
             width: children.width,
-            x: frame.x,
-            y: frame.y
+            x: children.x,
+            y: children.y
         })
         await frame.add(note)
     }
