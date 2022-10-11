@@ -152,7 +152,11 @@ async function genList(themes) {
             .toLowerCase()
             .replace(/\s\s+/g, ' ')
             var words = text.split(' ');
-            for (word of words) {
+            var unique_words = []
+            $.each(words, function (i, el){
+                if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
+            })
+            for (word of unique_words) {
                 // Get word count in this widget
                 if (stopList.indexOf(word) == -1) {
                     var tword = word
@@ -193,7 +197,8 @@ async function genList(themes) {
                 wordList: theme.words[word],
                 type:'tag'
             },
-            true)
+            true,
+            false)
             wordWrapper.append(wordEle)
         }
         themeEle.append(wordWrapper)

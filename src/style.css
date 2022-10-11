@@ -219,10 +219,11 @@ select {
     padding: 0;
 }
 .tag-button {
-    opacity: 70%;
+    opacity: 30%;
     margin-bottom: 3px !important;
     margin-right: 5px !important;
     padding-right: 10px;
+    border-radius: 5px;
 }
 .tag-button.selected {
     opacity: 100%;
