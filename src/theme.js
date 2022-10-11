@@ -89,6 +89,21 @@ async function clusteringTheme(data) {
 async function addNoteToTheme(data) {
     var selectedStickies = await miro.board.getSelection();
     const currentTheme = await miro.board.getById(data.theme.id)
+    var registeredTags = await getTags(); // get existed tags in board
+    var copyTagId
+    for(i=0; i<registeredTags.length;i++) {
+        if(registeredTags[i].title.toLowerCase() == 'copy') {
+            copyTagId = registeredTags[i].id
+            break
+        }
+    }
+    if(!copyTagId) {
+        const copyTag = await miro.board.createTag({
+            title: 'Copy',
+            color: 'blue',
+        });
+        copyTagId = copyTag.id
+    }
     var i = 0;
     for(selectedsticky of selectedStickies) {
         const note = await miro.board.createStickyNote({
@@ -101,6 +116,8 @@ async function addNoteToTheme(data) {
             y: currentTheme.y + Math.random()*currentTheme.height - currentTheme.height / 2
         })
         await currentTheme.add(note)
+        note.tagIds = selectedStickies.tagIds.push(copyTagId)
+        note.sync()
         i++;
     }
 }
