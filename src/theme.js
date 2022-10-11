@@ -114,8 +114,8 @@ async function addNoteToTheme(data) {
             shape: 'square',
             tagIds: tagIds,
             width: 200,
-            x: currentTheme.x + Math.random()*currentTheme.width - currentTheme.width / 2,
-            y: currentTheme.y + Math.random()*currentTheme.height - currentTheme.height / 2
+            x: 200 + currentTheme.x + Math.random()*(currentTheme.width-200) - currentTheme.width / 2,
+            y: 200 + currentTheme.y + Math.random()*(currentTheme.height-200) - currentTheme.height / 2
         })
         await currentTheme.add(note)
         i++;
@@ -243,7 +243,14 @@ async function getThemes() {
 
 $('#addTheme').on('click', async () => {
     toggleLoading(true);
-
+    var themes = getThemes()
+    var max_width = 0, max_height = 0
+    for(theme of themes) {
+        if(theme.x + theme.width / 2 > max_width) {
+            max_width = theme.x + theme.width
+            max_height = theme.y
+        }
+    }
     await miro.board.setAppData('focusedThemeName','Theme')
 
     var stickies = await getStickies();
@@ -264,10 +271,10 @@ $('#addTheme').on('click', async () => {
                     style: {
                       fillColor: '#FFFFFF',
                     },
-                    width: 800,
-                    height: 450,
-                    x: viewport.x + viewport.width / 2,
-                    y: viewport.y + viewport.height / 2,
+                    width: 3000,
+                    height: 1900,
+                    x: max_width + 1500,
+                    y: max_height + 950,
                 });
                 await miro.board.viewport.zoomTo(frame)
                 loadTabTheme();
