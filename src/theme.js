@@ -243,7 +243,7 @@ async function getThemes() {
 
 $('#addTheme').on('click', async () => {
     toggleLoading(true);
-    var themes = getThemes()
+    var themes = await getThemes()
     var max_width = 0, max_height = 0
     for(theme of themes) {
         if(theme.x + theme.width / 2 > max_width) {
