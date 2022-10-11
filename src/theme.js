@@ -133,7 +133,7 @@ async function duplicateTheme(data) {
         },
         width: currentTheme.width,
         height: currentTheme.height,
-        x: currentTheme.x + 3000,
+        x: currentTheme.x + 3100,
         y: currentTheme.y,
     });
     await miro.board.viewport.zoomTo(frame)
@@ -273,7 +273,7 @@ $('#addTheme').on('click', async () => {
                     },
                     width: 3000,
                     height: 1900,
-                    x: max_width,
+                    x: max_width+100,
                     y: max_height,
                 });
                 await miro.board.viewport.zoomTo(frame)
