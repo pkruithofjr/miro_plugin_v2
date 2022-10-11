@@ -106,18 +106,18 @@ async function addNoteToTheme(data) {
     }
     var i = 0;
     for(selectedsticky of selectedStickies) {
+        tagIds = selectedsticky.tagIds
+        tagIds.push(copyTagId)
         const note = await miro.board.createStickyNote({
             content: selectedsticky.content,
             style: selectedsticky.style,
             shape: 'square',
-            tagIds: selectedsticky.tagIds,
+            tagIds: tagIds,
             width: 200,
             x: currentTheme.x + Math.random()*currentTheme.width - currentTheme.width / 2,
             y: currentTheme.y + Math.random()*currentTheme.height - currentTheme.height / 2
         })
         await currentTheme.add(note)
-        note.tagIds = selectedStickies.tagIds.push(copyTagId)
-        note.sync()
         i++;
     }
 }
