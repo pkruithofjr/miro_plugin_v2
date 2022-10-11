@@ -273,8 +273,8 @@ $('#addTheme').on('click', async () => {
                     },
                     width: 3000,
                     height: 1900,
-                    x: max_width + 1500,
-                    y: max_height + 950,
+                    x: max_width,
+                    y: max_height,
                 });
                 await miro.board.viewport.zoomTo(frame)
                 loadTabTheme();
