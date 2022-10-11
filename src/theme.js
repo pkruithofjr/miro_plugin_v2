@@ -171,7 +171,7 @@ async function genList(themes) {
             var words = text.split(' ');
             var unique_words = []
             $.each(words, function (i, el){
-                if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
+                if($.inArray(el, unique_words) === -1) unique_words.push(el);
             })
             for (word of unique_words) {
                 // Get word count in this widget
