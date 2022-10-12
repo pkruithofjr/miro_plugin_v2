@@ -139,8 +139,8 @@ async function duplicateTheme(data) {
     const sticky = await miro.board.createStickyNote({
         content: "test note",
         shape: "square",
-        x: 1599,
-        y: 446
+        x: 1383,
+        y: 6584
     })
     await miro.board.viewport.zoomTo(frame)
     for(children of childrens) {
