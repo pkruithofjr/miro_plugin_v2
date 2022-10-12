@@ -144,8 +144,8 @@ async function duplicateTheme(data) {
             shape: 'square',
             tagIds: children.tagIds,
             width: children.width,
-            x: children.x + currentTheme.x,
-            y: children.y + currentTheme.y
+            x: children.x + 3100,
+            y: children.y
         })
         await frame.add(note)
     }
