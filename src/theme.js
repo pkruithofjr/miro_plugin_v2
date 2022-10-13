@@ -195,6 +195,8 @@ async function genList(themes) {
         themeinfo.words = wordCount
         themeList.push(themeinfo)
     }
+
+
     
     $('#themeList').html('');
 
@@ -209,6 +211,15 @@ async function genList(themes) {
         })
         var wordWrapper = $('<ul></ul>');
         var words = Object.keys(theme.words)
+        for(si = 0; si < words.length; si++) {
+            for(sj = 0; sj < si; sj++) {
+                if(themes.words[words[si]] > themes.words[words[sj]]) {
+                    temp = words[si]
+                    words[si] = words[sj]
+                    words[sj] = temp
+                }
+            }
+        }
         for(word of words) {
             var wordEle = themeItem({
                 showName: word,
