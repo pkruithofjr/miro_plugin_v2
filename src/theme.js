@@ -213,7 +213,7 @@ async function genList(themes) {
         var words = Object.keys(theme.words)
         for(si = 0; si < words.length; si++) {
             for(sj = 0; sj < si; sj++) {
-                if(themes.words[words[si]].length > themes.words[words[sj]].length) {
+                if(theme.words[words[si]].length > theme.words[words[sj]].length) {
                     temp = words[si]
                     words[si] = words[sj]
                     words[sj] = temp
