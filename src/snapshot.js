@@ -93,6 +93,10 @@ async function moveToSnapshot(snapshotId) {
             }
             newNote.tagIds = res
             await miro.board.createStickyNote(newNote)
+            if(parentId) {
+                const selected_theme = await miro.board.getById(newThemes[oldThemes.indexOf(parentId)])
+                await selected_theme.add(newNote)
+            }
         }
         toggleLoading(false);
     }
