@@ -76,22 +76,24 @@ async function moveToSnapshot(snapshotId) {
                 width: snapshot.themes[i].width,
                 height: snapshot.themes[i].height
             })
-            newThemes.push(newTheme.id)
+            newThemes.push(newTheme)
         }
         for(i=0;i<snapshot.stickies.length;i++) {
             console.log(snapshot.stickies[i].parentId)
             var newNote = snapshot.stickies[i]
             delete newNote.id
             delete newNote.height
+            parentId = newNote.parentId
+            delete newNote.parentId
             var res = []
             for(j=0;j<newNote.tagIds.length;j++) {
                 res.push(newTags[prevTags.indexOf(newNote.tagIds[j])])
             }
-            if(newNote.parentId) {
-                newNote.parentId = newThemes[oldThemes.indexOf(newNote.parentId)]
-            }
             newNote.tagIds = res
             await miro.board.createStickyNote(newNote)
+            if(parentId) {
+                await newThemes[oldThemes.indexOf(parentId)].add(newNote)
+            }
         }
         toggleLoading(false);
     }
