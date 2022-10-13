@@ -74,7 +74,8 @@ async function moveToSnapshot(snapshotId) {
                 x: snapshot.themes[i].x,
                 y: snapshot.themes[i].y,
                 width: snapshot.themes[i].width,
-                height: snapshot.themes[i].height
+                height: snapshot.themes[i].height,
+                childrenIds: []
             })
             newThemes.push(newTheme.id)
 
