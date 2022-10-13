@@ -173,6 +173,7 @@ $('#addSnapshot').on('click', async () => {
 
     var stickies = await getStickies();
     var tags = await getTags();
+    var themes = await getThemes();
 
     miro.board.ui.openModal({
         url: 'setSnapshotNameModal.html',
@@ -192,7 +193,8 @@ $('#addSnapshot').on('click', async () => {
                     id: randomId(),
                     name: metadata,
                     stickies,
-                    tags
+                    tags,
+                    themes
                 })
                 await miro.board.setAppData('snapshots', snapshots)
                 
