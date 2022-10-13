@@ -47,6 +47,7 @@ async function moveToSnapshot(snapshotId) {
         var snapshot = await getSnapshotById(snapshotId);
         var oldTags = await getTags();
         var oldStickies = await getStickies();
+        var oldThemes = await getThemes();
 
         oldTags.forEach(async (tag) => {
             await miro.board.remove(tag);
@@ -54,15 +55,25 @@ async function moveToSnapshot(snapshotId) {
         oldStickies.forEach(async (sticky) => {
             await miro.board.remove(sticky);
         })
+        oldThemes.forEach(async (theme) => {
+            await miro.board.remove(theme)
+        })
 
-
-        
         var newTags = []
         var prevTags = []
         for(i=0;i<snapshot.tags.length;i++) {
             newTag = await miro.board.createTag({color: snapshot.tags[i].color, title: snapshot.tags[i].title})
             prevTags.push(snapshot.tags[i].id)
             newTags.push(newTag.id)
+        }
+        for(i=0;i<snapshot.themes.length;i++) {
+            newTheme = await miro.board.createFrame({
+                title: snapshot.themes[i].title,
+                x: snapshot.themes[i].x,
+                y: snapshot.themes[i].y,
+                width: snapshot.themes[i].width,
+                height: snapshot.themes[i].height
+            })
         }
         for(i=0;i<snapshot.stickies.length;i++) {
             var newNote = snapshot.stickies[i]
@@ -85,6 +96,7 @@ async function updateSnapshot(snapshotId) {
 
     var stickies = await getStickies();
     var tags = await getTags();
+    var themes = await getThemes();
     var snapshot = await getSnapshotById(snapshotId);
 
     miro.board.getAppData("snapshots").then(async (metadata) => {
@@ -94,6 +106,7 @@ async function updateSnapshot(snapshotId) {
 
             snapshots[index].stickies = stickies;
             snapshots[index].tags = tags;
+            snapshots[index].themes = themes;
         }
         await miro.board.setAppData("snapshots", snapshots)
 
