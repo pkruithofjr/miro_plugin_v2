@@ -66,23 +66,28 @@ async function moveToSnapshot(snapshotId) {
             prevTags.push(snapshot.tags[i].id)
             newTags.push(newTag.id)
         }
+        var newThemes = [], oldThemes = []
         for(i=0;i<snapshot.themes.length;i++) {
-            newTheme = await miro.board.createFrame({
+            oldThemes.push(snapshot.themes[i].id)
+            const newTheme = await miro.board.createFrame({
                 title: snapshot.themes[i].title,
                 x: snapshot.themes[i].x,
                 y: snapshot.themes[i].y,
                 width: snapshot.themes[i].width,
                 height: snapshot.themes[i].height
             })
+            newThemes.push(newTheme.id)
         }
         for(i=0;i<snapshot.stickies.length;i++) {
             var newNote = snapshot.stickies[i]
             delete newNote.id
             delete newNote.height
-            delete newNote.parentId
             var res = []
             for(j=0;j<newNote.tagIds.length;j++) {
                 res.push(newTags[prevTags.indexOf(newNote.tagIds[j])])
+            }
+            if(newNote.parentId) {
+                newNote.parentId = newThemes[oldThemes.indexOf(newNote.parentId)]
             }
             newNote.tagIds = res
             await miro.board.createStickyNote(newNote)
