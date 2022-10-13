@@ -79,6 +79,7 @@ async function moveToSnapshot(snapshotId) {
             newThemes.push(newTheme.id)
         }
         for(i=0;i<snapshot.stickies.length;i++) {
+            console.log(snapshot.stickies[i].parentId)
             var newNote = snapshot.stickies[i]
             delete newNote.id
             delete newNote.height
