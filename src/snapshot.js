@@ -76,7 +76,8 @@ async function moveToSnapshot(snapshotId) {
                 width: snapshot.themes[i].width,
                 height: snapshot.themes[i].height
             })
-            newThemes.push(newTheme)
+            newThemes.push(newTheme.id)
+
         }
         for(i=0;i<snapshot.stickies.length;i++) {
             console.log(snapshot.stickies[i].parentId)
@@ -92,7 +93,8 @@ async function moveToSnapshot(snapshotId) {
             newNote.tagIds = res
             await miro.board.createStickyNote(newNote)
             if(parentId) {
-                await newThemes[oldThemes.indexOf(parentId)].add(newNote)
+                const selected_theme = await miro.board.getById(newThemes[oldThemes.indexOf(parentId)])
+                await selected_theme.add(newNote)
             }
         }
         toggleLoading(false);
