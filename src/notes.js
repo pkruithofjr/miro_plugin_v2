@@ -70,9 +70,8 @@ $("#addSticky").click(async function() {
         const note = await miro.board.createStickyNote({
             content: $("#noteContent").val(),
             shape: 'square',
-            // x: viewport.x + viewport.width * Math.random(),
-            // y: viewport.y + viewport.height * Math.random(),
-            x: 0, y: 0,
+            x: viewport.x + viewport.width * Math.random(),
+            y: viewport.y + viewport.height * Math.random(),
             tagIds: tagIds
         })
         await miro.board.viewport.zoomTo(note)
