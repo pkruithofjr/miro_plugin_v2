@@ -71,7 +71,7 @@ async function moveToSnapshot(snapshotId) {
             oldThemes.push(snapshot.themes[i].id)
             const newTheme = await miro.board.createFrame({
                 title: snapshot.themes[i].title,
-                x: snapshot.themes[i].x - snapshot.themes[i].width / 2,
+                x: snapshot.themes[i].x,
                 y: snapshot.themes[i].y,
                 width: snapshot.themes[i].width,
                 height: snapshot.themes[i].height,
