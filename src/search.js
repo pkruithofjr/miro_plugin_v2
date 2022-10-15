@@ -59,16 +59,15 @@ $('#createTagApply').on('click', async function () {
                     color: randomTagColor(),
                     title: metadata,
                 });
-                
+
+                loadTagSelectOptions();
+                loadTagList()
+                listWords();
                 widgetIds.forEach(async (widget, index) =>  {
                     widget = await miro.board.getById(widget)
                     widget.tagIds.push(newTag.id)
                     widget.sync()
                 })
-                
-                loadTagSelectOptions();
-                loadTagList()
-                listWords();
             }
             toggleLoading(false);
         });
