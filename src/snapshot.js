@@ -171,22 +171,22 @@ function removeSnapshot(snapshotId) {
         loadSnapshotsToList();
     })
 
-    miro.board.metadata.get().then(async (metadata) => {
-        var index = metadata[appId].snapshots.findIndex((item) => item.id == snapshotId);
-
-        if (index > -1) {
-            metadata[appId].snapshots.splice(index, 1);
-        }
-
-        await miro.board.metadata.update({
-            [appId]: {
-                ...metadata[appId],
-            },
-        });
-
-        toggleLoading(false);
-        loadSnapshotsToList();
-    });
+    // miro.board.metadata.get().then(async (metadata) => {
+    //     var index = metadata[appId].snapshots.findIndex((item) => item.id == snapshotId);
+    //
+    //     if (index > -1) {
+    //         metadata[appId].snapshots.splice(index, 1);
+    //     }
+    //
+    //     await miro.board.metadata.update({
+    //         [appId]: {
+    //             ...metadata[appId],
+    //         },
+    //     });
+    //
+    //     toggleLoading(false);
+    //     loadSnapshotsToList();
+    // });
 }
 
 $('#addSnapshot').on('click', async () => {
@@ -226,26 +226,26 @@ $('#addSnapshot').on('click', async () => {
             toggleLoading(false);
         });
 
-        miro.board.metadata.get().then(async (metadata) => {
-            if (metadata[appId].focusedSnapshotName) {
-                if (!metadata[appId].snapshots || !metadata[appId].snapshots.length) metadata[appId].snapshots = [];
-
-                metadata[appId].snapshots.push({
-                    id: randomId(),
-                    name: metadata[appId].focusedSnapshotName,
-                    stickies,
-                    tags,
-                });
-
-                await miro.board.metadata.update({
-                    [appId]: {
-                        ...metadata[appId],
-                    },
-                });
-
-                loadSnapshotsToList();
-            }
-            toggleLoading(false);
-        });
+        // miro.board.metadata.get().then(async (metadata) => {
+        //     if (metadata[appId].focusedSnapshotName) {
+        //         if (!metadata[appId].snapshots || !metadata[appId].snapshots.length) metadata[appId].snapshots = [];
+        //
+        //         metadata[appId].snapshots.push({
+        //             id: randomId(),
+        //             name: metadata[appId].focusedSnapshotName,
+        //             stickies,
+        //             tags,
+        //         });
+        //
+        //         await miro.board.metadata.update({
+        //             [appId]: {
+        //                 ...metadata[appId],
+        //             },
+        //         });
+        //
+        //         loadSnapshotsToList();
+        //     }
+        //     toggleLoading(false);
+        // });
     });
 });
