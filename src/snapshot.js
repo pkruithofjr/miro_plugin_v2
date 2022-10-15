@@ -106,6 +106,8 @@ async function moveToSnapshot(snapshotId) {
                 newNote.y = newNote.y + selected_theme.y - selected_theme.height /  2
                 const created_note = await miro.board.createStickyNote(newNote)
                 await selected_theme.add(created_note)
+            } else {
+                const created_note = await miro.board.createStickyNote(newNote)
             }
         }
         toggleLoading(false);
