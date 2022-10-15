@@ -164,7 +164,7 @@ function removeSnapshot(snapshotId) {
         var snapshots = metadata
         if (index > -1) {
             snapshot = snapshots.splice(index, 1);
-            await miro.board.setAppData("snapshots", snapshot)
+            await miro.board.setAppData("snapshots", snapshots)
         }
         
         toggleLoading(false);

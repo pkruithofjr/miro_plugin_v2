@@ -67,6 +67,7 @@ $('#createTagApply').on('click', async function () {
                 })
                 
                 loadTagSelectOptions();
+                loadTagList()
                 listWords();
             }
             toggleLoading(false);
