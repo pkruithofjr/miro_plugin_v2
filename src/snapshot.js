@@ -102,8 +102,8 @@ async function moveToSnapshot(snapshotId) {
             newNote.tagIds = res
             if(parentId != null) {
                 const selected_theme = await miro.board.getById(newThemes[oldThemes.indexOf(parentId)])
-                newNote.x = newNote.x + selected_theme.width
-                newNote.y = newNote.y + selected_theme.height
+                newNote.x = newNote.x + selected_theme.x
+                newNote.y = newNote.y + selected_theme.y
                 const created_note = await miro.board.createStickyNote(newNote)
                 await selected_theme.add(created_note)
             }
