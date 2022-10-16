@@ -54,6 +54,8 @@ async function deleteTheme(data) {
         await miro.board.remove(children)
     }
     await miro.board.remove(currentTheme);
+    loadTabTheme();
+
 }
 
 async function clusteringTheme(data) {
